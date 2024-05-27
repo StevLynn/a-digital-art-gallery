@@ -1,0 +1,356 @@
+:root{
+    --backround: #1E1E1E;
+    --primary: #AE0000;
+    --nav: #900000;
+    --font: #fff;
+    --box1: #515151;
+    --box2: #979797;
+}
+*{
+    font-family: 'Poppins', sans-serif;
+    margin: 0%;
+    padding: 0%;
+    text-decoration: none;
+}
+html{
+    scroll-behavior: smooth;
+}
+body{
+    background-color: var(--backround);
+    color: var(--font);
+}
+a{
+    color: var(--font);
+    text-decoration: none;
+    transition: color .4s ease;
+}
+a:hover{
+    color: #000;
+}
+h1{
+    font-size: 30px;
+    font-weight: 600 ;
+}
+h2{
+    font-size: 22px;
+    font-weight: 600;
+}
+h3{
+    font-size: 18px;
+    font-weight:500;
+}
+h4{
+    font-size: 16px;
+    font-weight:300;
+}
+i{
+    font-size: 20px;
+}
+
+/* navigasi */
+.aside_navbar{
+    display: flex;
+    background-color: var(--nav);
+    height: 100vh;
+    width: 200px;
+    /* position: fixed; */
+}
+.sidebar-menu{
+    padding-top: 25px;
+}
+.sidebar-item, .user, .setting{
+    height: 50px;
+    margin: 0%;
+    align-content: center;
+    width: 200px;
+    font-size: 20px;
+    font-weight: 500;
+    transition: all ease-in .2s;
+}
+.sidebar-item:hover, .user:hover, .setting:hover{
+    color: var(--primary);
+    background-color: #54000080;
+    border-left: 0.5rem solid #540000;
+    transition: all ease-in .2s;
+}
+.user{
+    margin-top: 150px;
+}
+span{
+    padding-left: 15px;
+}
+img{
+    text-align: center;
+    padding-top: 20px;
+    height: 5rem;
+    width: auto;
+    padding-left: 20px;
+}
+nav{
+    display: flex;
+    background-color: var(--nav);
+    height: 80px;
+    width: 100vw;
+    position: fixed;
+}
+.nav_top{
+    display: flex;
+    align-items: center;
+    width: 100vw;
+    height: 80px;
+    padding-left: 20px;
+}
+.nav_top h1{
+    padding-left: 20px;
+}
+
+/* menu home */
+.main{
+    flex-grow: 1;
+}
+.menu_home{
+    padding-top: 20px;
+    text-align: center;
+}
+.menu_home a{
+    font-size: 20px;
+    margin: 0 2rem;
+    font-weight: 700;
+    transition: all ease-in .2s;
+}
+.menu_home a:hover{
+    color: var(--primary) !important;
+    border-bottom: 0.2rem solid var(--primary);
+    transition: all ease-in .2s;
+}
+
+/* goup main */
+.container-main{
+    margin: 50px;
+}
+.group{
+    padding-top: 100px;
+    justify-content: center;
+    align-items: center;
+    /* display: flex;
+    align-content: center;
+    align-items: center;
+    align-self: center;
+    justify-content: center;
+    justify-items: center;
+    justify-self: center; */
+}
+.group_setting{
+    width: 80%;
+    padding: 20px;
+    flex-grow: 1;
+    left: 0;
+    box-sizing: border-box;
+}
+.section_setting{
+    margin-bottom: 50px;
+    padding: 30px;
+    border-radius: 50px;
+    background-color: var(--box1);
+}
+.section_setting:last-child {
+    margin-bottom: 10px;
+}
+.menu_section{
+    display: flex;
+    height: 50px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5) ;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    a:hover{
+        color: var(--font);
+    }
+}
+.menu_section:hover{
+    background-color: rgb(100, 100, 100);
+    border-radius: 10px;
+}
+#logout{
+    justify-content: start;
+    border-bottom: none;
+    h2{
+        padding-left: 20px ;
+        margin: 0;
+    }
+}
+#logout:hover{
+    background-color: rgb(100, 100, 100);
+    border-radius: 50px;
+}
+/* home popular artist */
+.popular_artist{
+
+}
+
+/* home popular artist */
+.popular_art{
+
+}
+
+/* home popular artist */
+.recommendation{
+
+}
+
+/* home popular artist */
+.late_art_post{
+
+}
+
+/* upload */
+.new_upload {
+    display: flex;
+    margin: 50px;
+    justify-content: end;
+    a:hover{
+        color: var(--primary);
+    }
+    i{
+        font-size: 40px;
+    }
+}
+
+/* account user */
+.profile-card {
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    position: relative;
+}
+.profile-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+.profile-icon i {
+    font-size: 100px;
+    color: #666;
+}
+.profile-stats {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px 0;
+}
+.profile-stats div {
+    text-align: center;
+    flex: 1;
+    padding: 0 10px;
+}
+.profile-description {
+    margin: 20px 0;
+}
+.profile-actions {
+    display: flex; 
+    justify-content: center;
+    margin: 20px 0;
+}
+.profile-actions button {
+    background-color: var(--primary);
+    color: var(--font);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.profile-actions button span {
+    margin-left: 5px;
+}
+.profile-icon {
+    position: relative;
+}
+.profile-icons {
+    position: absolute;
+    right: 30px;
+    top: 30px;
+    display: flex;
+    gap: 30px;
+}
+.profile-icons i {
+    font-size: 24px;
+    color: var(--font);
+    cursor: pointer;
+}
+.additional-icons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0;
+    border-bottom: 1px solid var(--font);
+    padding: 10px 350px; 
+}
+.additional-icons i {
+    font-size: 24px;
+    cursor: pointer;
+}
+
+
+/* footer */
+footer{
+    position: relative;
+    margin-top: 5rem;
+    background: var(--nav);
+    height: auto;
+    min-width: 100vw;
+    padding-top: 1rem;
+}
+.footer-content{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    margin: 0.5rem;
+}
+.footer-content h3{
+    font-size: 26px;
+    font-weight: 800;
+    line-height: 2rem;
+    color: var(--font);
+}
+.footer-content p{
+    font-size: 18px;
+    color: var(--font);
+}
+.socials{
+    list-style: none;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+.socials li{
+    margin: 0 10px;
+}
+.socials a i{
+    font-size: 1.1rem;
+    transition: color .4s ease;
+}
+.socials a:hover i{
+    color: #000;
+}
+.footer-bottom{
+    background: var(--box2);
+    padding: 1rem;
+}
+.footer-bottom p{
+    text-align: center;
+    align-content: center;
+    font-size: 1rem;
+    word-spacing: 0.1rem;
+    text-transform: capitalize;
+}
+.footer-bottom span{
+    text-transform: uppercase;
+    color: var(--primary);
+    font-weight: 700;
+}
