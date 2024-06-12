@@ -74,11 +74,6 @@ i {
 /* navigasi */
 .aside_navbar {
     display: flex;
-}
-
-/* navigasi */
-.aside_navbar {
-    display: flex;
     flex-direction: column;
     background-color: var(--nav);
     height: 100vh;
@@ -146,15 +141,22 @@ img {
     padding-left: 20px;
 }
 
-.container {
-    flex: 1; 
-    margin-left: 200px;
-    padding: 30px 20px;
-    display: flex;
-    justify-content: center; 
-    align-items: center; 
+.user {
+    margin-top: auto;
 }
 
+.container {
+    flex: 1;
+    margin-left: 220px; 
+    padding: 30px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: calc(100% - 220px);
+    min-height: 100vh; 
+    margin-top: -50px; 
+}
+/* Dashboard Admin */
 .card-container {
     display: flex;
     flex-direction: column;
@@ -249,18 +251,19 @@ img {
     font-weight: 600;
 }
 
+
+
 /*Persetujuan-Postingan*/
 .posting-management {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-40%, -90%);
     background-color: var(--card);
     border-radius: 10px;
     padding: 20px;
-    width: 100%; 
-    max-width: 1000px;
-    height: 50vh; 
+    margin-bottom: 10px;
+    width: 100%;
+    max-width: 1020px;
+    height: 500px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: var(--hover);
 }
 
 
@@ -314,7 +317,209 @@ img {
     font-weight: 700;
     color: black;
 }
+/* profile admin */
+.logout-container {
+    text-align: right;
+}
 
+.logout-icon {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.profile-container {
+    width: 1000px;
+    margin: 0 auto;
+    background: var(--card);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    min-height: 400px; 
+    max-height: 1000px; 
+    overflow-y: auto; 
+    
+}
+
+.profile-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.profile-header i {
+    font-size: 100px;
+    color: var(--background); 
+}
+
+.profile-header h2 {
+    margin-top: 10px;
+    font-size: 24px;
+}
+
+.profile-header p {
+    font-size: 16px;
+    color: var(--box2);
+}
+
+
+.profile-details {
+    margin-bottom: 20px;
+}
+
+.profile-details h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.profile-details p {
+    margin-bottom: 5px;
+}
+
+.profile-actions {
+    text-align: center;
+}
+
+.profile-actions button {
+    margin: 5px;
+}
+.profile-actions button:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
+    color: var(--background);
+}
+
+/* activity admin */
+.activity-box{
+    width: 1000px;
+    margin: 0 auto;
+    background: var(--card);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    min-height: 400px; 
+    max-height: 800px; 
+    overflow-y: auto; 
+}
+
+
+.activity-box h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.activity-box p {
+    margin: 10px 0;
+}
+
+.box {
+    margin-left: 520px;
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+    min-width: 100px; 
+    min-height: 400px; 
+    max-width: 400px; 
+    max-height: 100px; 
+}
+
+
+
+
+
+/* report admin */
+.report-container {
+    width: 1000px;
+    margin: 0 auto;
+    background: var(--font);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    min-height: 400px; 
+    max-height: 800px; 
+    overflow-y: auto; 
+}
+
+.report-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.table {
+    width: 100%;
+    margin-bottom: 1rem;
+    color: var(--background);
+    border-collapse: collapse;
+}
+
+.table th, .table td {
+    padding: 0.75rem;
+    vertical-align: top;
+    border-top: 1px solid var(--card);
+}
+
+.table thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid var(--card);
+}
+
+.table tbody + tbody {
+    border-top: 2px solid var(--card);
+}
+
+.table .table {
+    background-color: var(--font);
+}
+
+/* Edit Profle Admin*/
+.content{
+    margin-left: 220px;
+    padding: 20px;
+    width: calc(100% - 220px);
+    box-sizing: border-box;
+}
+
+.profile-content {
+    width: 1000px;
+    margin: 0 auto;
+    background: var(--card);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    min-height: 400px; 
+    max-height: 800px; 
+    overflow-y: auto; 
+}
+
+
+.profile-up {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.profile-up i {
+    font-size: 50px;
+    color: var(--background);
+}
+
+.profile-up h2 {
+    margin: 10px 0 5px;
+}
+
+.profile-up p {
+    color: #7f8c8d;
+}
+.profile-up i:hover {
+    color: var(--box2);
+    cursor: pointer;
+}
+
+.profile-form .form-label {
+    font-weight: 600;
+}
+.profile-form button:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
+    color: var(--background);
+}
 /* footer */
 footer {
     background: var(--nav);
@@ -362,7 +567,7 @@ footer {
     transition: color .4s ease;
 }
 
-.socials a:hover i {
+socials a:hover i {
     color: #000;
 }
 
