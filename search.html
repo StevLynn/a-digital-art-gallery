@@ -4,90 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Halaman Beranda Aplikasi</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,700&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        body, html {
-            height: 100%;
-            margin: 0;
-            font-family: Arial, sans-serif;
-        }
-        .top-section {
-            background-color: rgb(166, 7, 7);
-            color: white;
-            padding: 20px;
-            text-align: left;
-            border-bottom: 2px solid rgb(166, 7, 7);
-        }
-        .top-section h1 {
-            margin: 0;
-            font-size: 24px;
-        }
-        .search-bar {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            background-color: rgb(166, 17, 17);
-            border-bottom: 2px solid rgb(255, 255, 255);
-        }
-        .search-container {
-            position: relative;
-            width: 80%;
-        }
-        .search-container input {
-            width: calc(100% - 80px);
-            padding: 10px 40px 10px 40px;
-            font-size: 16px;
-            border: none;
-            border-radius: 20px;
-            background-color: #333;
-            color: white;
-        }
-        .search-container .fa-search,
-        .search-container .fa-times {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            color: white;
-        }
-        .search-container .fa-search {
-            left: 10px;
-            cursor: pointer;
-        }
-        .search-container .fa-times {
-            right: 10px;
-            cursor: pointer;
-            display: none;
-        }
-        .content-section {
-            background-color: #1a1a1a;
-            height: calc(100% - 200px);
-            padding: 20px;
-            box-sizing: border-box;
-        }
-        .bottom-nav {
-            background-color: rgb(166, 17, 17);
-            padding: 10px;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            text-align: center;
-            border-top: 2px solid rgb(166, 17, 17);
-        }
-        .bottom-nav a {
-            margin: 0 10px;
-        }
-        .bottom-nav i {
-            color: white;
-            font-size: 24px;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div class="top-section">
+        <a href="Home.html"><i class="fa-solid fa-arrow-left"></i></a>
         <h1>Search</h1>
     </div>
     <div class="search-bar">
@@ -99,13 +25,22 @@
     </div>
     <div class="content-section">
     </div>
-    <div class="bottom-nav">
-        <a href="Home.html"><i class="fas fa-house"></i></a>
-        <a href="#"><i class="fas fa-search"></i></a>
-        <a href="#"><i class="fas fa-arrow-up-from-bracket"></i></a>
-        <a href="#"><i class="fas fa-check-circle"></i></a>
-        <a href="Account_User.html"><i class="fas fa-user"></i></a>
-    </div>
+    <footer>
+        <div class="footer-content">
+            <h3>A Digital Art Gallery</h3>
+            <p>Visit us</p>
+            <ul class="socials">
+                <li><a href="https://www.instagram.com/adheputryb_01"><i class="fab fa-instagram"></i></a></li>
+                <li><a href="https://www.facebook.com/Alif Saputra"><i class="fab fa-facebook"></i></a></li>
+                <li><a href="https://www.twitter.com/ibnudzaky"><i class="fab fa-twitter"></i></a></li>
+                <li><a href="mailto:stevelinfriska29@gmail.com"><i class="far fa-envelope"></i></a></li>
+            </ul>
+        </div>
+        <div class="footer-bottom">
+            <p>copyright &copy;2024 A Digital Art Gallery. design by<span>kelompok 2dua</span></p>        
+        </div>    
+    </footer>
+
 
     <script>
         const inputElement = document.getElementById("searchInput");

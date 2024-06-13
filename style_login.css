@@ -57,25 +57,28 @@ input{
     background-color: var(--font);
     margin-bottom: 15px;
 }
+
 .jenis_kelamin {
-    display: flex;
-    min-width: 50%;
-    margin-left: 30px;
-    box-sizing: border-box;
-    margin-bottom: 1rem;
+    margin-bottom: 15px;
     color: var(--font);
-    .flex{
-        display: flex;
-        align-content: flex-start;
-        margin-top: 20px;
-        justify-content: space-between;
-    }
+    font-size: 1rem;
+    font-weight: 500;
 }
-.flex {
+
+.jenis_kelamin label{
+    display: block;
+    margin-bottom: 5px;
+    margin-left: 35px;
+}
+
+.jenis_kelamin .flex{
     display: flex;
-    padding-top: 0.1rem;
-    margin-bottom:0!important;
 }
+
+.jenis_kelamin .flex input{
+    cursor: pointer;
+}
+
 button{
     font-size: 1rem;
     margin-top: 15px;
@@ -98,23 +101,13 @@ input:focus{
     box-shadow: 0 10px 15px -1px rgba(0, 0, 0, 0.24);
 }
 
-.terms, .remainder{
+.remainder{
     text-align: left;
     padding-left: 1rem;
-    margin-top: -1rem;
     color: var(--font);
-}
-
-#checkbox{
-    margin-top: 1rem;
-    height: 1em;
-    width: 1em;
-    vertical-align: middle;
-    cursor: pointer;
-}
-
-.terms label, .remainder label{
-    font-size: 0.8rem;
+    margin-top: 5px;
+    text-align: right;
+    padding-right: 1rem;
 }
 
 .member{
@@ -122,16 +115,7 @@ input:focus{
     margin-top: 10px;
     color: #ffffffba;
 }
-
-.recover{
-    margin-top: -30px;
-    text-align: right;
-    padding-right: 1rem;
-    margin-bottom: 10px;
-    font-size: 0.8rem;
-    color: #575551 !important; 
-}
-
+    
 a{
     color: var(--font);
     text-decoration: none;

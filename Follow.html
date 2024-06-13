@@ -10,118 +10,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #2c2c2c;
-            color: #fff;
-        }
-        .aside_navbar {
-            display: flex;
-        }
-        #sidebar {
-            width: 200px;
-            background-color: #a52323;
-            padding-top: 20px;
-            position: fixed;
-            height: 100%;
-        }
-        .sidebar_logo {
-            text-align: center;
-            color: white;
-            font-size: 20px;
-            margin-bottom: 20px;
-            font-weight: bold;
-        }
-        .sidebar_logo img {
-            max-width: 100%;
-            height: auto;
-        }
-        .sidebar-menu,
-        .user,
-        .setting {
-            list-style: none;
-            padding: 0;
-        }
-        .sidebar-item {
-            margin: 15px 0;
-        }
-        .sidebar-item a {
-            text-decoration: none;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            padding: 10px;
-        }
-        .sidebar-item a i {
-            margin-right: 10px;
-        }
-        .user a,
-        .setting a {
-            text-decoration: none;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            padding: 10px;
-        }
-        .user a i,
-        .setting a i {
-            margin-right: 10px;
-        }
-        .user-icons {
-            display: flex;
-            justify-content: space-around;
-            padding: 20px;
-            margin-left: 200px;
-            margin-top: 10px;
-            background-color: #2c2c2c;
-        }
-        .user-icons .icon {
-            text-align: center;
-        }
-        .user-icons .icon i {
-            font-size: 50px;
-            color: #fff;
-            margin-bottom: 5px;
-        }
-        .user-icons .icon p {
-            margin: 0;
-            font-size: 14px;
-        }
-        .gallery {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            padding: 20px;
-            margin-left: 200px;
-            margin-top: 20px;
-            background-color: #2c2c2c;
-        }
-        .gallery .item {
-            background-color: #444;
-            padding: 20px;
-            position: relative;
-            height: 150px;
-        }
-        .gallery .item .name {
-            position: absolute;
-            bottom: 10px;
-            left: 10px;
-            font-size: 14px;
-        }
-        .gallery .item .heart {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            font-size: 18px;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
+    <div class="navbar-top">
+
+    </div>
     <div class="aside_navbar">
         <aside id="sidebar">
             <div class="sidebar_logo">
-                <img src="Logo.png" alt="Digital Art Gallery Logo">
+                <img src="img/Logo.png">
             </div>
             <div class="sidebar-menu">
                 <ul class="sidebar-item">
@@ -137,7 +36,7 @@
                     </a>
                 </ul>
                 <ul class="sidebar-item">
-                    <a href="Upload.html">
+                    <a href="">
                         <i class="fa-solid fa-arrow-up-from-bracket"></i>
                         <span>Upload</span>
                     </a>
@@ -149,7 +48,7 @@
                     </a>
                 </ul>
                 <ul class="sidebar-item">
-                    <a href="Halaman_registrasi.html">
+                    <a href="">
                         <i class="fa-solid fa-bell"></i>
                         <span>Notification</span>
                     </a>
@@ -169,54 +68,72 @@
             </ul>
         </aside>
     </div>
-    <div class="user-icons">
-        <div class="icon">
-            <i class="fas fa-user-circle"></i>
-            <p>nama</p>
+
+    <div class="main" id="main">
+        <div class="user-icons">
+            <div class="icon">
+                <i class="fas fa-user-circle"></i>
+                <p>nama</p>
+            </div>
+            <div class="icon">
+                <i class="fas fa-user-circle"></i>
+                <p>nama</p>
+            </div>
+            <div class="icon">
+                <i class="fas fa-user-circle"></i>
+                <p>nama</p>
+            </div>
+            <div class="icon">
+                <i class="fas fa-user-circle"></i>
+                <p>nama</p>
+            </div>
+            <div class="icon">
+                <i class="fas fa-user-circle"></i>
+                <p>nama</p>
+            </div>
         </div>
-        <div class="icon">
-            <i class="fas fa-user-circle"></i>
-            <p>nama</p>
+        <div class="gallery">
+            <div class="item">
+                <div class="name">nama</div>
+                <div class="heart"><i class="far fa-heart"></i></div>
+            </div>
+            <div class="item">
+                <div class="name">nama</div>
+                <div class="heart"><i class="far fa-heart"></i></div>
+            </div>
+            <div class="item">
+                <div class="name">nama</div>
+                <div class="heart"><i class="far fa-heart"></i></div>
+            </div>
+            <div class="item">
+                <div class="name">nama</div>
+                <div class="heart"><i class="far fa-heart"></i></div>
+            </div>
+            <div class="item">
+                <div class="name">nama</div>
+                <div class="heart"><i class="far fa-heart"></i></div>
+            </div>
+            <div class="item">
+                <div class="name">nama</div>
+                <div class="heart"><i class="far fa-heart"></i></div>
+            </div>
         </div>
-        <div class="icon">
-            <i class="fas fa-user-circle"></i>
-            <p>nama</p>
-        </div>
-        <div class="icon">
-            <i class="fas fa-user-circle"></i>
-            <p>nama</p>
-        </div>
-        <div class="icon">
-            <i class="fas fa-user-circle"></i>
-            <p>nama</p>
-        </div>
+
+        <footer>
+            <div class="footer-content">
+                <h3>A Digital Art Gallery</h3>
+                <p>Visit us</p>
+                <ul class="socials">
+                    <li><a href="https://www.instagram.com/adheputryb_01"><i class="fab fa-instagram"></i></a></li>
+                    <li><a href="https://www.facebook.com/Alif Saputra"><i class="fab fa-facebook"></i></a></li>
+                    <li><a href="https://www.twitter.com/ibnudzaky"><i class="fab fa-twitter"></i></a></li>
+                    <li><a href="mailto:stevelinfriska29@gmail.com"><i class="far fa-envelope"></i></a></li>
+                </ul>
+            </div>
+            <div class="footer-bottom">
+                <p>copyright &copy;2024 A Digital Art Gallery. design by<span>kelompok 2dua</span></p>
+            </div>
+        </footer>
     </div>
-    <div class="gallery">
-        <div class="item">
-            <div class="name">nama</div>
-            <div class="heart"><i class="far fa-heart"></i></div>
-        </div>
-        <div class="item">
-            <div class="name">nama</div>
-            <div class="heart"><i class="far fa-heart"></i></div>
-        </div>
-        <div class="item">
-            <div class="name">nama</div>
-            <div class="heart"><i class="far fa-heart"></i></div>
-        </div>
-        <div class="item">
-            <div class="name">nama</div>
-            <div class="heart"><i class="far fa-heart"></i></div>
-        </div>
-        <div class="item">
-            <div class="name">nama</div>
-            <div class="heart"><i class="far fa-heart"></i></div>
-        </div>
-        <div class="item">
-            <div class="name">nama</div>
-            <div class="heart"><i class="far fa-heart"></i></div>
-        </div>
-    </div>
-    <script src="script.js"></script>
 </body>
 </html>
