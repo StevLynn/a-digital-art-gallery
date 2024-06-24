@@ -474,7 +474,8 @@ img {
 }
 
 /* Edit Profle Admin*/
-.content{
+/* Edit Profle Admin*/
+.content {
     margin-left: 220px;
     padding: 20px;
     width: calc(100% - 220px);
@@ -488,11 +489,36 @@ img {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    min-height: 400px; 
-    max-height: 800px; 
-    overflow-y: auto; 
+    min-height: 400px;
+    max-height: 800px;
+    overflow-y: auto;
 }
 
+.profile-up {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.profile-icon {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    cursor: pointer;
+    background-color: var(--card);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 50px;
+    color: var(--font);
+    margin: 0 auto; /* Center the profile icon */
+}
+
+.profile-icon img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
 
 .profile-up {
     text-align: center;
@@ -501,7 +527,6 @@ img {
 
 .profile-up i {
     font-size: 50px;
-    color: var(--background);
 }
 
 .profile-up h2 {
@@ -511,18 +536,27 @@ img {
 .profile-up p {
     color: #7f8c8d;
 }
-.profile-up i:hover {
-    color: var(--box2);
-    cursor: pointer;
-}
 
 .profile-form .form-label {
     font-weight: 600;
 }
-.profile-form button:hover {
+
+.profile-form button {
     transform: scale(1.1);
     transition: transform 0.3s ease;
     color: var(--background);
+}
+
+.change-password {
+    margin-top: 10px;
+    color: #beb7b7; /* Warna merah */
+}
+
+
+.change-password a {
+    text-decoration: underline;
+    color: #a3a4a5;
+    font-weight: 400;
 }
 /* footer */
 footer {
