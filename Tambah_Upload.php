@@ -19,7 +19,7 @@ if(!isset($_SESSION['username'])) {
 
 <body>
     <div class="top-section">
-        <a href="Home.html"><i class="fa-solid fa-arrow-left"></i></a>
+        <a href="Home.php"><i class="fa-solid fa-arrow-left"></i></a>
         <h1>New Post</h1>
     </div>
         <form action="posting.php" method="POST" enctype="multipart/form-data">

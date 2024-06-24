@@ -71,6 +71,7 @@ i {
     font-size: 20px;
 }
 
+
 /* navigasi */
 .aside_navbar {
     display: flex;
@@ -184,6 +185,10 @@ img {
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    .label, span{
+        font-size: 20px;
+        font-weight: 700;
+    }
 }
 
 .card::before {
