@@ -10,14 +10,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="style_admin.css">
-    <!-- <link rel="stylesheet" href="responsif.css"> -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="navbar-top"></div>
     <div class="aside_navbar">
         <aside id="sidebar">
-            <div class="sidebar-logo">
+            <div class="sidebar_logo">
                 <img src="img/Logo.png" alt="Logo">
             </div>
             <div class="sidebar-menu">
@@ -34,7 +33,7 @@
                     </a>
                 </ul>
                 <ul class="sidebar-item">
-                    <a href="#">
+                    <a href="Persetujuan_Postingan_Admin.html">
                         <i class="fa-solid fa-paint-brush"></i>
                         <span>Manajemen Postingan</span>
                     </a>
@@ -53,7 +52,7 @@
                 </ul>
             </div>
             <ul class="user">
-                <a href="#">
+                <a href="Account_User.html">
                     <i class="fa-solid fa-user"></i>
                     <span>Profile</span>
                 </a>
@@ -63,54 +62,49 @@
     <div class="content">
         <div class="profile-content">
             <!-- <div class="logout-container">
-                <a href="logout.php" class="logout-icon">
+                <a href="logout.html" class="logout-icon">
                     <i class="fa-solid fa-sign-out-alt"></i>
-                    <span>Keluar</span>
+                    <span>Logout</span>
                 </a>
             </div> -->
             <div class="profile-up">
                 <i class="fas fa-user-circle"></i>
-                <h2>Edit Profil</h2>
+                <h2>Edit Profile</h2>
                 <p>Administrator</p>
             </div>
-            <form class="profile-form" action="update_profile.php" method="post">
+            <form class="profile-form">
                 <div class="mb-3">
-                    <label for="name" class="form-label">username</label>
-                    <input type="text" class="form-control" id="username" name="username" value="Nama Admin">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="name" value="Admin Name">
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
                     <input type="email" class="form-control" id="email" name="email" value="admin@example.com">
                 </div>
                 <div class="mb-3">
-                    <label for="phone" class="form-label">Telepon</label>
-                    <input type="tel" class="form-control" id="phone" name="phone" value="+1234567890">
+                    <label for="phone" class="form-label">Phone</label>
+                    <input type="tel" class="form-control" id="phone" value="+1234567890">
                 </div>
                 <div class="mb-3">
-                    <label for="address" class="form-label">Alamat</label>
-                    <input type="text" class="form-control" id="address" name="address" value="123 Admin Street, Kota Admin, Negara Admin">
-                </div>
-                <p class="change-password">Ubah Kata Sandi</p>
-                <div class="mb-3">
-                    <label for="password" class="form-label">Kata Sandi Lama</label>
-                    <input type="password" class="form-control" id="password" name="password">
+                    <label for="address" class="form-label">Address</label>
+                    <input type="text" class="form-control" id="address" value="123 Admin Street, Admin City, Admin Country">
                 </div>
                 <div class="mb-3">
-                    <label for="password" class="form-label">Kata Sandi Baru</label>
-                    <input type="password" class="form-control" id="password" name="password">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password">
                 </div>
                 <div class="mb-3">
-                    <label for="confirm-password" class="form-label">Konfirmasi Kata Sandi</label>
-                    <input type="password" class="form-control" id="confirm-password" name="confirm_password">
+                    <label for="confirm-password" class="form-label">Confirm Password</label>
+                    <input type="password" class="form-control" id="confirm-password">
                 </div>
-                <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                <button type="submit" class="btn btn-primary">Save Changes</button>
             </form>
         </div>
     </div>
     <footer>
         <div class="footer-content">
             <h3>A Digital Art Gallery</h3>
-            <p>Kunjungi kami</p>
+            <p>Visit us</p>
             <ul class="socials">
                 <li><a href="https://www.instagram.com/adheputryb_01"><i class="fab fa-instagram"></i></a></li>
                 <li><a href="https://www.facebook.com/Alif Saputra"><i class="fab fa-facebook"></i></a></li>
@@ -119,10 +113,36 @@
             </ul>
         </div>
         <div class="footer-bottom">
-            <p>hak cipta &copy;2024 Galeri Seni Digital. desain oleh<span>kelompok 2dua</span></p>
+            <p>copyright &copy;2024 A Digital Art Gallery. design by<span>kelompok 2dua</span></p>
         </div>
     </footer>
     
-    <script src="script.js"></script>
+    <script>
+        document.getElementById('profile_image').addEventListener('change', function(event) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                document.querySelector('.profile-icon i').style.display = 'none';
+                var profileIcon = document.querySelector('.profile-icon');
+                var imgElement = document.createElement('img');
+                imgElement.src = e.target.result;
+                imgElement.style.width = '100%';
+                imgElement.style.height = '100%';
+                imgElement.style.borderRadius = '50%';
+                imgElement.style.objectFit = 'cover';
+                profileIcon.innerHTML = ''; 
+                profileIcon.appendChild(imgElement); 
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        });
+
+        document.getElementById('saveChangesBtn').addEventListener('click', function(event) {
+            event.preventDefault(); 
+            document.getElementById('saveMessage').style.display = 'block';
+            setTimeout(function() {
+                document.getElementById('saveMessage').style.display = 'none';
+                document.querySelector('.profile-form').submit();
+            }, 3000); 
+        });
+    </script>
 </body>
 </html>
