@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Digital Art Gallery</title>
+    <title>Galeri Seni Digital</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,700&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
@@ -11,14 +11,12 @@
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
-    <!-- <link rel="stylesheet" href="responsif.css"> -->
 </head>
-
 <body>
     <div class="navbar-top"></div>
     <div class="aside_navbar">
         <aside id="sidebar">
-            <div class="sidebar-logo">
+            <div class="sidebar_logo">
                 <img src="img/Logo.png" alt="Logo">
             </div>
             <div class="sidebar-menu">
@@ -36,7 +34,7 @@
                 </ul>
 
                 <ul class="sidebar-item">
-                    <a href="#">
+                    <a href="Persetujuan_Postingan_Admin.html">
                         <i class="fa-solid fa-paint-brush"></i>
                         <span>Post Management</span>
                     </a>
@@ -57,7 +55,7 @@
                 </ul>
             </div>
             <ul class="user">
-                <a href="Account_User.html">
+                <a href="edit_profil_admin.html">
                     <i class="fa-solid fa-user"></i>
                     <span>Profile</span>
                 </a>
@@ -66,62 +64,95 @@
     </div>
     <div class="content">
         <div class="profile-content">
-            <!-- <div class="logout-container">
-                <a href="logout.html" class="logout-icon">
-                    <i class="fa-solid fa-sign-out-alt"></i>
-                    <span>Logout</span>
-                </a>
-            </div> -->
             <div class="profile-up">
-                <i class="fas fa-user-circle"></i>
-                <h2>Edit Profile</h2>
+                <label for="profile_image" class="profile-icon">
+                    <i class="fa-solid fa-user"></i>
+                    <input type="file" id="profile_image" name="profile_image" style="display: none;">
+                </label>
+                <h2>Edit Profil</h2>
                 <p>Administrator</p>
             </div>
-            <form class="profile-form">
+            <!-- Form edit profil -->
+            <form class="profile-form" action="edit_profil_admin.php" method="post" enctype="multipart/form-data">
                 <div class="mb-3">
-                    <label for="name" class="form-label">Name</label>
-                    <input type="text" class="form-control" id="name" value="Admin Name">
+                    <label for="username" class="form-label">Username</label>
+                    <input type="text" class="form-control" id="username" name="username" value="Nama Admin">
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="email" value="admin@example.com">
+                    <input type="email" class="form-control" id="email" name="email" value="admin@example.com">
                 </div>
                 <div class="mb-3">
-                    <label for="phone" class="form-label">Phone</label>
-                    <input type="tel" class="form-control" id="phone" value="+1234567890">
+                    <label for="phone" class="form-label">Telephone</label>
+                    <input type="tel" class="form-control" id="phone" name="phone" value="+1234567890">
                 </div>
                 <div class="mb-3">
                     <label for="address" class="form-label">Address</label>
-                    <input type="text" class="form-control" id="address" value="123 Admin Street, Admin City, Admin Country">
+                    <input type="text" class="form-control" id="address" name="address" value="123 Admin Street, Kota Admin, Negara Admin">
+                </div>
+                <p class="change-password">Change Password</p>
+                <div class="mb-3">
+                    <label for="old_password" class="form-label">Old Password</label>
+                    <input type="password" class="form-control" id="old_password" name="old_password">
                 </div>
                 <div class="mb-3">
-                    <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="password">
+                    <label for="new_password" class="form-label">New Password</label>
+                    <input type="password" class="form-control" id="new_password" name="new_password">
                 </div>
                 <div class="mb-3">
-                    <label for="confirm-password" class="form-label">Confirm Password</label>
-                    <input type="password" class="form-control" id="confirm-password">
+                    <label for="confirm_password" class="form-label">Confirm Password</label>
+                    <input type="password" class="form-control" id="confirm_password" name="confirm_password">
                 </div>
-                <button type="submit" class="btn btn-primary">Save Changes</button>
+                <button type="submit" class="btn btn-primary" id="saveChangesBtn">Save Changes</button>
+                <div class="alert alert-success mt-3" id="saveMessage" style="display: none;" role="alert">
+                    Data berhasil disimpan
+                </div>
             </form>
         </div>
+        <footer>
+            <div class="footer-content">
+                <h3>A Digital Art Gallery</h3>
+                <p>Visit us</p>
+                <ul class="socials">
+                    <li><a href="https://www.instagram.com/adheputryb_01"><i class="fab fa-instagram"></i></a></li>
+                    <li><a href="https://www.facebook.com/Alif Saputra"><i class="fab fa-facebook"></i></a></li>
+                    <li><a href="https://www.twitter.com/ibnudzaky"><i class="fab fa-twitter"></i></a></li>
+                    <li><a href="mailto:stevelinfriska29@gmail.com"><i class="far fa-envelope"></i></a></li>
+                </ul>
+            </div>
+            <div class="footer-bottom">
+                <p>copyright &copy;2024 A Digital Art Gallery. design by<span>kelompok 2dua</span></p>
+            </div>
+        </footer>
     </div>
-    <footer>
-        <div class="footer-content">
-            <h3>A Digital Art Gallery</h3>
-            <p>Visit us</p>
-            <ul class="socials">
-                <li><a href="https://www.instagram.com/adheputryb_01"><i class="fab fa-instagram"></i></a></li>
-                <li><a href="https://www.facebook.com/Alif Saputra"><i class="fab fa-facebook"></i></a></li>
-                <li><a href="https://www.twitter.com/ibnudzaky"><i class="fab fa-twitter"></i></a></li>
-                <li><a href="mailto:stevelinfriska29@gmail.com"><i class="far fa-envelope"></i></a></li>
-            </ul>
-        </div>
-        <div class="footer-bottom">
-            <p>copyright &copy;2024 A Digital Art Gallery. design by<span>kelompok 2dua</span></p>
-        </div>
-    </footer>
     
-    <script src="script.js"></script>
+    <script>
+        document.getElementById('profile_image').addEventListener('change', function(event) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                document.querySelector('.profile-icon i').style.display = 'none';
+                var profileIcon = document.querySelector('.profile-icon');
+                var imgElement = document.createElement('img');
+                imgElement.src = e.target.result;
+                imgElement.style.width = '100%';
+                imgElement.style.height = '100%';
+                imgElement.style.borderRadius = '50%';
+                imgElement.style.objectFit = 'cover';
+                profileIcon.innerHTML = ''; // Clear existing content
+                profileIcon.appendChild(imgElement); // Add new image
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        });
+
+        document.getElementById('saveChangesBtn').addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent form submission
+            document.getElementById('saveMessage').style.display = 'block';
+            setTimeout(function() {
+                document.getElementById('saveMessage').style.display = 'none';
+                // Submit the form after showing the message
+                document.querySelector('.profile-form').submit();
+            }, 3000); // Delay for 3 seconds (3000 milliseconds)
+        });
+    </script>
 </body>
 </html>
