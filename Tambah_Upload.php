@@ -1,3 +1,9 @@
+<?php
+session_start();
+if(!isset($_SESSION['username'])) {
+    header('location:Halaman_login.html');
+}?>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -16,17 +22,17 @@
         <a href="Home.html"><i class="fa-solid fa-arrow-left"></i></a>
         <h1>New Post</h1>
     </div>
-        <form>
+        <form action="posting.php" method="POST" enctype="multipart/form-data">
             <div class="form-gambar" id="file-input-container">
-                <input type="file" id="gambar" name="gambar" accept="image/*" required>
+                <input type="file" id="gambar" name="gambar" accept="image/*" required onchange="previewImage(event)">
             </div>
             <div class="form-gambar">
                 <img id="preview" alt="Preview">
                 <canvas id="canvas" width="450" height="250"></canvas>
             </div>
             <div class="form-group">
-                <label for="nama">Painting name</label>
-                <input type="text" id="nama" name="nama" required>
+                <label for="title_lukisan">Painting name</label>
+                <input type="text" id="title_lukisan" name="title_lukisan" required>
             </div>
             <div class="form-group">
                 <label for="deskripsi">Description</label>
@@ -37,8 +43,8 @@
                 <input type="text" id="media" name="media" required>
             </div>
             <div class="form-group">
-                <label for="tahun">Production year</label>
-                <input type="number" id="tahun" name="tahun" required>
+                <label for="tahun_pembuatan">Production year</label>
+                <input type="date" id="tahun_pembuatan" name="tahun_pembuatan" required>
             </div>
             <div class="form-group">
                 <label for="ukuran">Size</label>
@@ -65,59 +71,16 @@
     </footer>
 
     <script>
-        document.getElementById('gambar').addEventListener('change', function() {
-            var file = this.files[0];
-            var reader = new FileReader();
-
-            reader.onload = function(e) {
-                var img = new Image();
-                img.src = e.target.result;
-
-                img.onload = function() {
-                    var canvas = document.getElementById('canvas');
-                    var ctx = canvas.getContext('2d');
-                    
-                    // Calculate aspect ratio
-                    var aspectRatio = img.width / img.height;
-                    var newWidth, newHeight;
-                    if (aspectRatio > 1) {
-                        newWidth = 450;
-                        newHeight = 450 / aspectRatio;
-                    } else {
-                        newHeight = 250;
-                        newWidth = 250 * aspectRatio;
-                    }
-
-                    // Clear the canvas
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-                    // Draw image centered in the canvas
-                    var xOffset = (canvas.width - newWidth) / 2;
-                    var yOffset = (canvas.height - newHeight) / 2;
-                    ctx.drawImage(img, xOffset, yOffset, newWidth, newHeight);
-
-                    // Display the image preview
-                    var preview = document.getElementById('preview');
-                    preview.src = canvas.toDataURL();
-                    preview.style.display = 'block';
-
-                    // Hide the file input container
-                    var fileInputContainer = document.getElementById('file-input-container');
-                    fileInputContainer.style.display = 'none';
-                }
+        function previewImage(event) {
+            const input = event.target;
+            const reader = new FileReader();
+            reader.onload = function(){
+                const preview = document.getElementById('preview');
+                preview.src = reader.result;
+                preview.style.display = 'block';
             }
-
-            reader.readAsDataURL(file);
-        });
-
-        document.querySelector('form').addEventListener('submit', function(event) {
-            event.preventDefault();
-            
-            var canvas = document.getElementById('canvas');
-            var croppedImage = document.getElementById('cropped-image');
-            croppedImage.src = canvas.toDataURL();
-            croppedImage.style.display = 'block';
-        });
+            reader.readAsDataURL(input.files[0]);
+        }
     </script>
 </body>
 </html>

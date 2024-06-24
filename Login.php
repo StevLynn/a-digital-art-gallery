@@ -22,7 +22,7 @@
 
         if ($stmt_user->fetch() && password_verify($password, $hashed_password_user)) {
             $_SESSION['username'] = $db_username_user;
-            header("Location: Home.html");
+            header("Location: Home.php");
             exit();
         } elseif ($stmt_admin->fetch() && $password == $password_admin) {
             $_SESSION['username'] = $db_username_admin;

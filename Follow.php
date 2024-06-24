@@ -3,6 +3,7 @@ session_start();
 if(!isset($_SESSION['username'])) {
     header('location:Halaman_login.html');
 }?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,8 +17,8 @@ if(!isset($_SESSION['username'])) {
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="style_user.css">
-
 </head>
+
 <body>
     <div class="navbar-top">
 
@@ -73,52 +74,72 @@ if(!isset($_SESSION['username'])) {
             </ul>
         </aside>
     </div>
-    
-        <main>
-            <section class="profile-card">
-                <div class="profile-header">
-                    <div class="profile-icon">
-                        <i class="fas fa-user-circle"></i>
-                    </div>
-                    <h2>Nama</h2>
-                    <div class="profile-stats">
-                        <div>0<br>Suka</div>
-                        <div>0<br>Pengikut</div>
-                        <div>0<br>Mengikuti</div>
-                    </div>
-                    <div class="profile-icons">
-                        <a href="Upload.html"> <i class="fa-solid fa-arrow-up-from-bracket"></i> </a>
-                        <a href="Settings.html"> <i class="fas fa-cog"></i> </a>
-                    </div>
-                </div>
-                <div class="profile-description">
-                    <p>Deskripsi singkat . . . . . . ()</p>
-                    <p>Tautan dalam bentuk ikon</p>
-                </div>
-                <div class="profile-actions">
-                    <button> <a href="Edit_profil_pengguna.php"> Edit profile <i class="fas fa-edit"></i></a></button>
-                </div>
-                <div class="additional-icons">
-                    <i class="fas fa-th-large"></i>
-                    <i class="fas fa-heart"></i>
-                </div>
-            </section>
-        
-            <footer>
-                <div class="footer-content">
-                    <h3>A Digital Art Gallery</h3>
-                    <p>Visit us</p>
-                    <ul class="socials">
-                        <li><a href="https://www.instagram.com/adheputryb_01"><i class="fab fa-instagram"></i></a></li>
-                        <li><a href="https://www.facebook.com/Alif Saputra"><i class="fab fa-facebook"></i></a></li>
-                        <li><a href="https://www.twitter.com/ibnudzaky"><i class="fab fa-twitter"></i></a></li>
-                        <li><a href="mailto:stevelinfriska29@gmail.com"><i class="far fa-envelope"></i></a></li>
-                    </ul>
-                </div>
-                <div class="footer-bottom">
-                    <p>copyright &copy;2024 A Digital Art Gallery. design by<span>kelompok 2dua</span></p>
-                </div>
-            </footer>
-        </main>
+
+    <div class="main" id="main">
+        <div class="user-icons">
+            <div class="icon">
+                <i class="fas fa-user-circle"></i>
+                <p>nama</p>
+            </div>
+            <div class="icon">
+                <i class="fas fa-user-circle"></i>
+                <p>nama</p>
+            </div>
+            <div class="icon">
+                <i class="fas fa-user-circle"></i>
+                <p>nama</p>
+            </div>
+            <div class="icon">
+                <i class="fas fa-user-circle"></i>
+                <p>nama</p>
+            </div>
+            <div class="icon">
+                <i class="fas fa-user-circle"></i>
+                <p>nama</p>
+            </div>
+        </div>
+        <div class="gallery">
+            <div class="item">
+                <div class="name">nama</div>
+                <div class="heart"><i class="far fa-heart"></i></div>
+            </div>
+            <div class="item">
+                <div class="name">nama</div>
+                <div class="heart"><i class="far fa-heart"></i></div>
+            </div>
+            <div class="item">
+                <div class="name">nama</div>
+                <div class="heart"><i class="far fa-heart"></i></div>
+            </div>
+            <div class="item">
+                <div class="name">nama</div>
+                <div class="heart"><i class="far fa-heart"></i></div>
+            </div>
+            <div class="item">
+                <div class="name">nama</div>
+                <div class="heart"><i class="far fa-heart"></i></div>
+            </div>
+            <div class="item">
+                <div class="name">nama</div>
+                <div class="heart"><i class="far fa-heart"></i></div>
+            </div>
+        </div>
+
+        <footer>
+            <div class="footer-content">
+                <h3>A Digital Art Gallery</h3>
+                <p>Visit us</p>
+                <ul class="socials">
+                    <li><a href="https://www.instagram.com/adheputryb_01"><i class="fab fa-instagram"></i></a></li>
+                    <li><a href="https://www.facebook.com/Alif Saputra"><i class="fab fa-facebook"></i></a></li>
+                    <li><a href="https://www.twitter.com/ibnudzaky"><i class="fab fa-twitter"></i></a></li>
+                    <li><a href="mailto:stevelinfriska29@gmail.com"><i class="far fa-envelope"></i></a></li>
+                </ul>
+            </div>
+            <div class="footer-bottom">
+                <p>copyright &copy;2024 A Digital Art Gallery. design by<span>kelompok 2dua</span></p>
+            </div>
+        </footer>
     </div>
-    
+</body>
+</html>

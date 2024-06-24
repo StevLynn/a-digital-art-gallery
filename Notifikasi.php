@@ -1,3 +1,9 @@
+<?php
+session_start();
+if(!isset($_SESSION['username'])) {
+    header('location:Halaman_login.html');
+}?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,7 +22,7 @@
 <body>
     <nav>
         <div class="nav_top">
-            <a href="Home.html"><i class="fa-solid fa-arrow-left"></i></a>
+            <a href="Home.php"><i class="fa-solid fa-arrow-left"></i></a>
             <h1>Notification</h1>
         </div>
     </nav>
