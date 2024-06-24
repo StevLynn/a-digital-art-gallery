@@ -10,8 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="style_admin.css">
-    <!-- <link rel="stylesheet" href="responsif.css"> -->
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -57,7 +56,7 @@
                 </ul>
             </div>
             <ul class="user">
-                <a href="Account_User.html">
+                <a href="profil_admin.html">
                     <i class="fa-solid fa-user"></i>
                     <span>Profile</span>
                 </a>
@@ -91,30 +90,70 @@
                 </div>
             </div>
             <div class="chart">
-                <div class="chart-label">Grafik Pertumbuhan Pengguna dan postingan</div>
+                <div class="chart-label"></div>
+                <canvas id="growthChart" width="50" height="15"></canvas>
             </div>
         </div>
     </div>
             
-            <footer>
-                <div class="footer-content">
-                    <h3>A Digital Art Gallery</h3>
-                    <p>Visit us</p>
-                    <ul class="socials">
-                        <li><a href="https://www.instagram.com/adheputryb_01"><i class="fab fa-instagram"></i></a></li>
-                        <li><a href="https://www.facebook.com/Alif Saputra"><i class="fab fa-facebook"></i></a></li>
-                        <li><a href="https://www.twitter.com/ibnudzaky"><i class="fab fa-twitter"></i></a></li>
-                        <li><a href="mailto:stevelinfriska29@gmail.com"><i class="far fa-envelope"></i></a></li>
-                    </ul>
-                </div>
-                <div class="footer-bottom">
-                    <p>copyright &copy;2024 A Digital Art Gallery. design by<span>kelompok 2dua</span></p>
-                </div>
-            </footer>
+    <footer>
+        <div class="footer-content">
+            <h3>A Digital Art Gallery</h3>
+            <p>Visit us</p>
+            <ul class="socials">
+                <li><a href="https://www.instagram.com/adheputryb_01"><i class="fab fa-instagram"></i></a></li>
+                <li><a href="https://www.facebook.com/Alif Saputra"><i class="fab fa-facebook"></i></a></li>
+                <li><a href="https://www.twitter.com/ibnudzaky"><i class="fab fa-twitter"></i></a></li>
+                <li><a href="mailto:stevelinfriska29@gmail.com"><i class="far fa-envelope"></i></a></li>
+            </ul>
         </div>
-    </div>
-    
-    
-    <script src="script.js"></script>
+        <div class="footer-bottom">
+            <p>copyright &copy;2024 A Digital Art Gallery. design by<span>kelompok 2dua</span></p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
+    <script>
+    // Contoh data pertumbuhan pengguna dan postingan (sesuaikan dengan data Anda)
+    const growthData = {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun'],
+        pengguna: [10, 20, 30, 40, 50, 60],
+        postingan: [5, 10, 15, 20, 25, 30]
+    };
+
+    // Inisialisasi grafik
+    const ctx = document.getElementById('growthChart').getContext('2d');
+    const growthChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: growthData.labels,
+            datasets: [{
+                label: 'Pengguna',
+                data: growthData.pengguna,
+                borderColor: 'rgb(75, 192, 192)',
+                tension: 0.1
+            },
+            {
+                label: 'Postingan',
+                data: growthData.postingan,
+                borderColor: 'rgb(255, 99, 132)',
+                tension: 0.1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
+            plugins: {
+                legend: {
+                    position: 'top' // Mengatur posisi label di atas grafik
+                }
+            }
+        }
+    });
+</script>
+
 </body>
 </html>
