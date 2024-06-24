@@ -211,14 +211,17 @@ nav{
 }
 
 .card {
-    margin-bottom: 30px;
+    margin-bottom: 50px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     position: relative;
+    img {
+        height: 200px;
+        width: 100%;
+    }
 }
 
-.card-img-top {
-    height: 200px;
-    width: 100%;
+.col-md-4 {
+    margin-bottom: 50px;
 }
 
 .icon-container {

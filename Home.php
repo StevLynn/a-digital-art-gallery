@@ -1,5 +1,22 @@
 <?php
 session_start();
+
+include 'connection.php';
+
+// Query untuk mengambil data gambar dengan status 'success'
+$sql = "SELECT * FROM lukisan WHERE status = 'success'";
+$result = $conn->query($sql);
+
+// Inisialisasi array untuk menyimpan hasil query
+$images = [];
+
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        // Simpan seluruh baris (row) ke dalam array
+        $images[] = $row; // Menyimpan semua data baris dari hasil query
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -96,46 +113,16 @@ session_start();
                                 <p class="mt-2">Artist 1</p>
                             </div>
                         </div>
-                        <div class="col-md-2">
-                            <div class="text-center">
-                                <div class="rounded-circle bg-light p-3">
-                                    <i class="fas fa-user fa-lg text-secondary"></i>
-                                </div>
-                                <p class="mt-2">Artist 2</p>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="text-center">
-                                <div class="rounded-circle bg-light p-3">
-                                    <i class="fas fa-user fa-lg text-secondary"></i>
-                                </div>
-                                <p class="mt-2">Artist 3</p>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="text-center">
-                                <div class="rounded-circle bg-light p-3">
-                                    <i class="fas fa-user fa-lg text-secondary"></i>
-                                </div>
-                                <p class="mt-2">Artist 4</p>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="text-center">
-                                <div class="rounded-circle bg-light p-3">
-                                    <i class="fas fa-user fa-lg text-secondary"></i>
-                                </div>
-                                <p class="mt-2">Artist 5</p>
-                            </div>
-                        </div>
                     </div>
                 </div>
+
                 <div class="container mt-5">
                     <h2>Popular Arts</h2>
                     <div class="row">
+                        <?php foreach ($images as $image): ?>
                         <div class="col-md-4">
                             <div class="card mb-4 box-shadow">
-                                <img class="card-img-top">
+                                <img class="card-img-top" src="<?php echo $image['gambar']; ?>" alt="Artwork Image">
                                 <div class="icon-container">
                                     <button type="button"><i class="fas fa-heart fa-lg"></i></button>
                                     <button type="button"><i class="fas fa-comment fa-lg"></i></button>
@@ -144,9 +131,10 @@ session_start();
                                 </div>
                             </div>
                             <div class="name-container">
-                                <span>Nama Art</span>
+                                <span><?php echo $image['title_lukisan']; ?></span>
                             </div>
                         </div>
+                        <?php endforeach; ?>
                     </div>
                 </div>
             </div>
@@ -154,9 +142,10 @@ session_start();
             <div id="internasionalContent" style="display: none;">
                 <div class="container mt-5">
                     <div class="row">
+                        <?php foreach ($images as $image): ?>
                         <div class="col-md-4">
                             <div class="card mb-4 box-shadow">
-                                <img class="card-img-top">
+                                <img class="card-img-top" src="<?php echo $image['gambar']; ?>" alt="Artwork Image">
                                 <div class="icon-container">
                                     <button type="button"><i class="fas fa-heart fa-lg"></i></button>
                                     <button type="button"><i class="fas fa-comment fa-lg"></i></button>
@@ -165,9 +154,10 @@ session_start();
                                 </div>
                             </div>
                             <div class="name-container">
-                                <span>Nama art</span>
+                                <span><?php echo $image['title_lukisan']; ?></span>
                             </div>
                         </div>
+                        <?php endforeach; ?>
                     </div>
                 </div>
             </div>
@@ -175,26 +165,26 @@ session_start();
             <div id="nasionalContent" style="display: none;">
                 <div class="container mt-5">
                     <div class="row">
-                        <div class="col-md-4">
-                            <div class="card mb-4 box-shadow">
-                                <img class="card-img-top">
-                                <div class="icon-container">
-                                    <button type="button"><i class="fas fa-heart fa-lg"></i></button>
-                                    <button type="button"><i class="fas fa-comment fa-lg"></i></button>
-                                    <button type="button"><i class="fas fa-share fa-lg"></i></button>
-                                    <button type="button"><i class="fas fa-download fa-lg"></i></button>
+                        <?php foreach ($images as $image): ?>
+                            <div class="col-md-4">
+                                <div class="card mb-4 box-shadow">
+                                    <img class="card-img-top" src="<?php echo $image['gambar']; ?>" alt="Artwork Image">
+                                    <div class="icon-container">
+                                        <button type="button"><i class="fas fa-heart fa-lg"></i></button>
+                                        <button type="button"><i class="fas fa-comment fa-lg"></i></button>
+                                        <button type="button"><i class="fas fa-share fa-lg"></i></button>
+                                        <button type="button"><i class="fas fa-download fa-lg"></i></button>
+                                    </div>
+                                </div>
+                                <div class="name-container">
+                                    <span><?php echo $image['title_lukisan']; ?></span>
                                 </div>
                             </div>
-                            <div class="name-container">
-                                <span>Nama Art </span>
-                            </div>
-                        </div>
+                        <?php endforeach; ?>
                     </div>
                 </div>
             </div>
         </div>
-
-    
     
         <footer>
             <div class="footer-content">
