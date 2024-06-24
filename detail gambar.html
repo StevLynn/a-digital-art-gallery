@@ -18,6 +18,15 @@
             background-color: #282828;
             padding: 20px;
             border-radius: 10px;
+            position: relative;
+        }
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
         }
         .image-placeholder {
             width: 100%;
@@ -136,6 +145,7 @@
 <body>
 
 <div class="container">
+    <span class="close-button" id="close-button">&times;</span>
     <h1>Nama lukisan</h1>
     <h2>Karya nama akun pemosting</h2>
     <div class="image-placeholder"></div>
@@ -143,7 +153,7 @@
         <span class="icon" id="post-like-icon">&#9825;<span class="like-count" id="post-like-count">0</span></span>
         <span class="icon" id="comment-icon">&#128172;<span class="comment-count" id="comment-count">0</span></span>
         <span class="icon">&#9654;</span>
-        <span class="icon">&#10515;</span>
+        <span class="icon">&#128257;</span>
     </div>
     <div class="details">
         <p><strong>Tahun</strong> : Tahun pembuatan</p>
@@ -165,10 +175,12 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
+        const closeButton = document.getElementById('close-button');
         const commentIcon = document.getElementById('comment-icon');
         const postLikeIcon = document.getElementById('post-like-icon');
         const commentForm = document.getElementById('comment-form');
         
+        closeButton.addEventListener('click', closeDetailContainer);
         commentIcon.addEventListener('click', toggleCommentSection);
         postLikeIcon.addEventListener('click', likePost);
         commentForm.addEventListener('submit', handleCommentFormSubmit);
@@ -176,6 +188,11 @@
         loadCommentsFromLocalStorage();
         updateCommentCount();
     });
+
+    function closeDetailContainer() {
+        const detailContainer = document.querySelector('.container');
+        detailContainer.style.display = 'none';
+    }
 
     function toggleCommentSection() {
         const commentSection = document.getElementById('comment-section');
@@ -235,69 +252,74 @@
         
         newComment.append(likesDiv, userDiv, timestampDiv, textDiv, actionsDiv, replyForm, replyList); // Menempatkan likesDiv di depan
         commentList.appendChild(newComment);
-
+        
         replies.forEach(reply => {
             addComment(reply.text, reply.user, reply.timestamp, reply.replies, newComment);
         });
+        
+        saveCommentsToLocalStorage();
     }
 
     function createActionsDiv(commentElement, textDiv) {
         const actionsDiv = document.createElement('div');
         actionsDiv.classList.add('actions');
-        
+
         const likeButton = document.createElement('button');
-        likeButton.innerHTML = '&#9829;';
-        likeButton.addEventListener('click', (event) => {
-            likeComment(event.target, commentElement);
+        likeButton.textContent = 'Like';
+        likeButton.addEventListener('click', () => {
+            likeComment(likeButton, commentElement);
         });
 
         const replyButton = document.createElement('button');
         replyButton.textContent = 'Reply';
-        replyButton.addEventListener('click', () => toggleReplyForm(commentElement));
-        
+        replyButton.addEventListener('click', () => {
+            toggleReplyForm(commentElement);
+        });
+
         const editButton = document.createElement('button');
         editButton.textContent = 'Edit';
-        editButton.addEventListener('click', () => editComment(textDiv, commentElement));
-        
+        editButton.addEventListener('click', () => {
+            editComment(textDiv, commentElement);
+        });
+
         const deleteButton = document.createElement('button');
         deleteButton.textContent = 'Delete';
-        deleteButton.addEventListener('click', () => deleteComment(commentElement));
-        
+        deleteButton.addEventListener('click', () => {
+            deleteComment(commentElement);
+        });
+
         const reportButton = document.createElement('button');
         reportButton.textContent = 'Report';
-        reportButton.addEventListener('click', () => reportComment(commentElement));
+        reportButton.addEventListener('click', () => {
+            reportComment(commentElement);
+        });
+
+        actionsDiv.append(likeButton, replyButton, editButton, deleteButton, reportButton);
         
-        actionsDiv.append(likeButton, replyButton, editButton, deleteButton, reportButton); // Memindahkan
-        actionsDiv.append(likeButton, replyButton, editButton, deleteButton, reportButton); // Menambahkan tombol like ke dalam actionsDiv
         return actionsDiv;
     }
 
     function createReplyForm(commentElement) {
         const replyForm = document.createElement('form');
         replyForm.classList.add('reply-form');
-        
-        const replyTextarea = document.createElement('textarea');
-        replyTextarea.rows = 3;
-        replyTextarea.placeholder = 'Tambahkan balasan Anda di sini...';
-        
-        const replyButton = document.createElement('button');
-        replyButton.type = 'submit';
-        replyButton.textContent = 'Kirim';
-        
-        replyForm.append(replyTextarea, replyButton);
-        
-        replyForm.addEventListener('submit', (event) => handleReplyFormSubmit(event, commentElement));
+        replyForm.innerHTML = `
+            <textarea rows="2" placeholder="Add a reply..."></textarea>
+            <button type="submit">Reply</button>
+        `;
+        replyForm.addEventListener('submit', (event) => {
+            handleReplyFormSubmit(event, commentElement);
+        });
         return replyForm;
     }
 
     function handleReplyFormSubmit(event, commentElement) {
         event.preventDefault();
-        const replyTextarea = event.target.querySelector('textarea');
-        const replyText = replyTextarea.value.trim();
+        const replyInput = event.target.querySelector('textarea');
+        const replyText = replyInput.value.trim();
         
         if (replyText) {
             addComment(replyText, 'User', new Date().toLocaleString(), [], commentElement);
-            replyTextarea.value = '';
+            replyInput.value = '';
             updateCommentCount();
             saveCommentsToLocalStorage();
         }
@@ -309,11 +331,21 @@
     }
 
     function editComment(textDiv, commentElement) {
-        const newText = prompt('Edit your comment:', textDiv.textContent);
-        if (newText !== null) {
-            textDiv.textContent = newText;
-            saveCommentsToLocalStorage();
+        const isEditing = commentElement.classList.contains('editing');
+        commentElement.classList.toggle('editing', !isEditing);
+
+        if (isEditing) {
+            const textarea = commentElement.querySelector('.edit-mode textarea');
+            textDiv.textContent = textarea.value.trim();
+            textarea.remove();
+        } else {
+            const textarea = document.createElement('textarea');
+            textarea.rows = 3;
+            textarea.value = textDiv.textContent.trim();
+            textDiv.innerHTML = '';
+            textDiv.appendChild(textarea);
         }
+        saveCommentsToLocalStorage();
     }
 
     function deleteComment(commentElement) {
@@ -322,62 +354,70 @@
         saveCommentsToLocalStorage();
     }
 
-    function likeComment(likeButton, commentElement) {
-        const likeCountSpan = commentElement.querySelector('.likes span');
-        likeCountSpan.textContent = parseInt(likeCountSpan.textContent) + 1;
+    function likeComment(button, commentElement) {
+        const likesSpan = commentElement.querySelector('.likes span');
+        likesSpan.textContent = parseInt(likesSpan.textContent) + 1;
         saveCommentsToLocalStorage();
     }
 
     function reportComment(commentElement) {
-        const reportConfirmed = confirm('Apakah Anda yakin ingin melaporkan komentar ini?');
-        if (reportConfirmed) {
-            alert('Komentar telah dilaporkan.');
-        }
+        alert('Comment reported.');
     }
 
     function updateCommentCount() {
-        const commentList = document.getElementById('comment-list');
-        const commentCount = commentList.children.length;
-        document.getElementById('comment-count').textContent = commentCount;
+        const commentCount = document.getElementById('comment-count');
+        const comments = document.querySelectorAll('.comment:not(.reply)').length;
+        commentCount.textContent = comments;
     }
 
     function saveCommentsToLocalStorage() {
-        const comments = [];
-        document.querySelectorAll('.comment').forEach(comment => {
-            const user = comment.querySelector('.user').textContent;
-            const timestamp = comment.querySelector('.timestamp').textContent;
-            const text = comment.querySelector('.text').textContent;
-            const likes = comment.querySelector('.likes span').textContent;
-            const replies = getReplies(comment);
-            comments.push({ user, timestamp, text, likes, replies });
+        const comments = Array.from(document.querySelectorAll('.comment:not(.reply)')).map(commentElement => {
+            const textDiv = commentElement.querySelector('.text');
+            const userDiv = commentElement.querySelector('.user');
+            const timestampDiv = commentElement.querySelector('.timestamp');
+            const likesSpan = commentElement.querySelector('.likes span');
+            const replyList = commentElement.querySelector('.comment-list');
+            const replies = getReplies(replyList);
+            return {
+                id: commentElement.dataset.commentId,
+                text: textDiv.textContent.trim(),
+                user: userDiv.textContent.trim(),
+                timestamp: timestampDiv.textContent.trim(),
+                likes: parseInt(likesSpan.textContent),
+                replies: replies
+            };
         });
         localStorage.setItem('comments', JSON.stringify(comments));
     }
 
-    function getReplies(commentElement) {
-        const replies = [];
-        commentElement.querySelectorAll(':scope > .comment-list > .comment').forEach(reply => {
-            const user = reply.querySelector('.user').textContent;
-            const timestamp = reply.querySelector('.timestamp').textContent;
-            const text = reply.querySelector('.text').textContent;
-            const likes = reply.querySelector('.likes span').textContent;
-            const repliesNested = getReplies(reply);
-            replies.push({ user, timestamp, text, likes, replies: repliesNested });
+    function getReplies(replyList) {
+        return Array.from(replyList.children).map(replyElement => {
+            const textDiv = replyElement.querySelector('.text');
+            const userDiv = replyElement.querySelector('.user');
+            const timestampDiv = replyElement.querySelector('.timestamp');
+            const likesSpan = replyElement.querySelector('.likes span');
+            const nestedReplyList = replyElement.querySelector('.comment-list');
+            const nestedReplies = getReplies(nestedReplyList);
+            return {
+                id: replyElement.dataset.commentId,
+                text: textDiv.textContent.trim(),
+                user: userDiv.textContent.trim(),
+                timestamp: timestampDiv.textContent.trim(),
+                likes: parseInt(likesSpan.textContent),
+                replies: nestedReplies
+            };
         });
-        return replies;
     }
 
     function loadCommentsFromLocalStorage() {
         const comments = JSON.parse(localStorage.getItem('comments')) || [];
         comments.forEach(comment => {
-            addComment(comment.text, comment.user, comment.timestamp, comment.replies);
-            const commentElement = document.querySelector(`.comment[data-comment-id="${generateUniqueId()}"]`);
-            commentElement.querySelector('.likes span').textContent = comment.likes;
+            addComment(comment.text, comment.user, comment.timestamp, comment.replies, null);
         });
     }
 
     function generateUniqueId() {
-        return '_' + Math.random().toString(36).substr(2, 9);
+        return 'comment-' + Date.now() + '-' + Math.floor(Math.random() * 1000);
     }
 </script>
 
