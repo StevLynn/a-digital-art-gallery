@@ -1,3 +1,4 @@
+<<<<<<< HEAD:style.css
 :root {
     --background: #1E1E1E;
     --primary: #AE0000;
@@ -599,3 +600,600 @@ socials a:hover i {
     color: var(--primary);
     font-weight: 700;
 }
+=======
+:root {
+    --background: #1E1E1E;
+    --primary: #AE0000;
+    --nav: #900000;
+    --font: #fff;
+    --hover: #0000;
+    --box1: #515151;
+    --box2: #979797;
+    --color-admin: #D2AF9C;
+    --color-user: #D29C9C;
+    --color-art: #9CA1D2;
+    --color-approval: #9CBBD2;
+    --color-deletion: #D29CC0;
+    --card: #dadada;
+}
+
+* {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+body {
+    background-color: var(--box2);
+    color: #000;
+}
+
+a {
+    color: var(--font);
+    text-decoration: none;
+    transition: color .4s ease;
+}
+
+a:hover {
+    color: var(--hover);
+}
+
+h1 {
+    font-size: 30px;
+    font-weight: 600;
+}
+
+h2 {
+    font-size: 22px;
+    font-weight: 600;
+}
+
+h3 {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+h4 {
+    font-size: 16px;
+    font-weight: 300;
+}
+
+i {
+    font-size: 20px;
+}
+
+/* navigasi */
+.aside_navbar {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--nav);
+    height: 100vh;
+    width: 220px;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.sidebar-logo {
+    text-align: center;
+    padding: 20px;
+    border-bottom: 1px solid var(--font);
+}
+
+.sidebar-logo img {
+    max-width: 100px;
+}
+
+.sidebar-logo span {
+    display: block;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.sidebar-menu {
+    padding-top: 25px;
+}
+
+.sidebar-item, .user, .setting {
+    height: 50px;
+    margin: 0;
+    align-content: center;
+    width: 250px;
+    font-size: 20px;
+    font-weight: 500;
+    transition: all ease-in .2s;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.sidebar-item:hover, .user:hover, .setting:hover {
+    color: var(--primary);
+    background-color: #54000080;
+    border-left: 0.5rem solid #540000;
+    transition: all ease-in .2s;
+}
+
+.user {
+    margin-top: auto;
+}
+
+span {
+    padding-left: 15px;
+    font-size: 12px;
+}
+
+img {
+    text-align: center;
+    padding-top: 20px;
+    height: 5rem;
+    width: auto;
+    padding-left: 20px;
+}
+
+.user {
+    margin-top: auto;
+}
+
+.container {
+    flex: 1;
+    margin-left: 220px; 
+    padding: 30px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: calc(100% - 220px);
+    min-height: 100vh; 
+    margin-top: -50px; 
+}
+.card-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    background-color: var(--box2);
+    padding: 10px;
+    border-radius: 10px;
+    width: calc(100% - 80px);
+}
+
+.card-row {
+    display: flex;
+    gap: 20px;
+}
+
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 200px; 
+    height: 120px; 
+    background-color: var(--card);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    background-color: var(--font);
+    z-index: 0;
+}
+
+.card#admin::before {
+    background-color: var(--color-admin);
+}
+
+.card#user::before {
+    background-color: var(--color-user);
+}
+
+.card#art::before {
+    background-color: var(--color-art);
+}
+
+.card#approval::before {
+    background-color: var(--color-approval);
+}
+
+.card#deletion::before {
+    background-color: var(--color-deletion);
+}
+
+.card .count,
+.card .label {
+    z-index: 1; 
+    padding-right: 20px; 
+}
+
+.card .count {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.card .label {
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+}
+
+.chart {
+    width: 100%;
+    height: 300px;
+    background-color: var(--card);
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+.chart-label {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+
+
+/*Persetujuan-Postingan*/
+.posting-management {
+    background-color: var(--card);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 10px;
+    width: 100%;
+    max-width: 1020px;
+    height: 500px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: var(--hover);
+}
+
+
+.tab {
+    display: flex;
+    border-bottom: 1px solid #ccc;
+}
+
+.tab button {
+    background-color: inherit;
+    border: none;
+    outline: none;
+    padding: 14px 16px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 17px;
+}
+
+.tab button:hover {
+    background-color: #ddd;
+}
+
+.tab button.active {
+    background-color: #ccc;
+}
+
+.tabcontent {
+    display: none;
+    padding: 20px;
+}
+
+#Persetujuan.tabcontent {
+    display: block; 
+}
+/* Daftar-Pengguna*/
+.daftar-pengguna {
+    background-color: var(--card);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 10px;
+    width: 100%;
+    max-width: 1020px;
+    height: 500px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: var(--hover);
+}
+
+.daftar-pengguna h2 {
+    margin-top: 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: black;
+}
+/* profile admin */
+.logout-container {
+    text-align: right;
+}
+
+.logout-icon {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.profile-container {
+    width: 1000px;
+    margin: 0 auto;
+    background: var(--card);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    min-height: 400px; 
+    max-height: 1000px; 
+    overflow-y: auto; 
+    
+}
+
+.profile-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.profile-header i {
+    font-size: 100px;
+    color: var(--background); 
+}
+
+.profile-header h2 {
+    margin-top: 10px;
+    font-size: 24px;
+}
+
+.profile-header p {
+    font-size: 16px;
+    color: var(--box2);
+}
+
+
+.profile-details {
+    margin-bottom: 20px;
+}
+
+.profile-details h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.profile-details p {
+    margin-bottom: 5px;
+}
+
+.profile-actions {
+    text-align: center;
+}
+
+.profile-actions button {
+    margin: 5px;
+}
+.profile-actions button:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
+    color: var(--background);
+}
+
+/* activity admin */
+.activity-container {
+    width: 1000px;
+    margin: 0 auto;
+    background: var(--card);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    min-height: 400px; 
+    max-height: 800px; 
+    overflow-y: auto; 
+}
+
+
+.activity-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.activity-cards {
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+}
+
+.activity-card {
+    background: var(--font);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    width: 45%;
+}
+
+.activity-card h3 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.activity-card p {
+    margin: 10px 0;
+}
+
+/* report admin */
+.report-container {
+    width: 1000px;
+    margin: 0 auto;
+    background: var(--font);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    min-height: 400px; 
+    max-height: 800px; 
+    overflow-y: auto; 
+}
+
+.report-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.table {
+    width: 100%;
+    margin-bottom: 1rem;
+    color: var(--background);
+    border-collapse: collapse;
+}
+
+.table th, .table td {
+    padding: 0.75rem;
+    vertical-align: top;
+    border-top: 1px solid var(--card);
+}
+
+.table thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid var(--card);
+}
+
+.table tbody + tbody {
+    border-top: 2px solid var(--card);
+}
+
+.table .table {
+    background-color: var(--font);
+}
+
+/* Edit Profle Admin*/
+.content{
+    margin-left: 220px;
+    padding: 20px;
+    width: calc(100% - 220px);
+    box-sizing: border-box;
+}
+
+.profile-content {
+    width: 1000px;
+    margin: 0 auto;
+    background: var(--card);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    min-height: 400px; 
+    max-height: 800px; 
+    overflow-y: auto; 
+}
+
+
+.profile-up {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.profile-up i {
+    font-size: 50px;
+    color: var(--background);
+}
+
+.profile-up h2 {
+    margin: 10px 0 5px;
+}
+
+.profile-up p {
+    color: #7f8c8d;
+}
+.profile-up i:hover {
+    color: var(--box2);
+    cursor: pointer;
+}
+
+.profile-form .form-label {
+    font-weight: 600;
+}
+.profile-form button:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
+    color: var(--background);
+}
+/* footer */
+footer {
+    background: var(--nav);
+    height: auto;
+    width: 100%;
+    padding-top: 1rem;
+    margin-top: auto;
+}
+
+.footer-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    margin: 0.5rem;
+}
+
+.footer-content h3 {
+    font-size: 26px;
+    font-weight: 800;
+    line-height: 2rem;
+    color: var(--font);
+}
+
+.footer-content p {
+    font-size: 18px;
+    color: var(--font);
+}
+
+.socials {
+    list-style: none;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+
+.socials li {
+    margin: 0 10px;
+}
+
+.socials a i {
+    font-size: 1.1rem;
+    transition: color .4s ease;
+}
+
+socials a:hover i {
+    color: #000;
+}
+
+.footer-bottom {
+    background: var(--box2);
+    padding: 1rem;
+}
+
+.footer-bottom p {
+    text-align: center;
+    align-content: center;
+    font-size: 1rem;
+    word-spacing: 0.1rem;
+    text-transform: capitalize;
+}
+
+.footer-bottom span {
+    text-transform: uppercase;
+    color: var(--primary);
+    font-weight: 700;
+}
+>>>>>>> branch_stev:style_admin.css

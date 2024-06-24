@@ -6,22 +6,34 @@
         $username = $_POST['username'];
         $password = $_POST['password'];
 
-        $sql = "SELECT username, password FROM data_user WHERE username = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("s", $username);
-        $stmt->execute();
-        $stmt->store_result();
-        $stmt->bind_result($db_username, $hashed_password);
+        $sql_user = "SELECT username, password FROM data_user WHERE username = ?";
+        $stmt_user = $conn->prepare($sql_user);
+        $stmt_user->bind_param("s", $username);
+        $stmt_user->execute();
+        $stmt_user->store_result();
+        $stmt_user->bind_result($db_username_user, $hashed_password_user);
+        
+        $sql_admin = "SELECT username, password FROM admin WHERE username = ?";
+        $stmt_admin = $conn->prepare($sql_admin);
+        $stmt_admin->bind_param("s", $username);
+        $stmt_admin->execute();
+        $stmt_admin->store_result();
+        $stmt_admin->bind_result($db_username_admin, $password_admin);
 
-        if ($stmt->fetch() && password_verify($password, $hashed_password)) {
-            $_SESSION['username'] = $db_username;
+        if ($stmt_user->fetch() && password_verify($password, $hashed_password_user)) {
+            $_SESSION['username'] = $db_username_user;
             header("Location: Home.html");
+            exit();
+        } elseif ($stmt_admin->fetch() && $password == $password_admin) {
+            $_SESSION['username'] = $db_username_admin;
+            header("Location: Dashboard_Admin.html");
             exit();
         } else {
             echo "Username atau password salah.";
         }
 
-        $stmt->close();
+        $stmt_user->close();
+        $stmt_admin->close();
         $conn->close();
     }
 ?>
