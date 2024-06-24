@@ -53,10 +53,6 @@ if(!isset($_SESSION['username'])) {
             <input type="text" class="form-control" id="youtube" name="youtube">
         </div>
         <div class="mb-3">
-            <label for="profile_image" class="form-label">Profile Image URL</label>
-            <input type="text" class="form-control" id="profile_image" name="profile_image">
-        </div>
-        <div class="mb-3">
             <label for="profile_image_file" class="form-label">Upload Profile Image</label>
             <input type="file" class="form-control" id="profile_image_file" name="profile_image_file">
         </div>
