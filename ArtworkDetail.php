@@ -1,0 +1,468 @@
+<?php
+session_start();
+include 'connection.php';
+
+if (isset($_GET['id'])) {
+    $id = $_GET['id'];
+
+    // Query untuk mengambil detail lukisan berdasarkan ID
+    $sql = "SELECT * FROM lukisan WHERE id = $id AND status = 'success'";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        // Ambil data yang diperlukan dari $row
+        $nama_lukisan = $row['title_lukisan'];
+        $nama_akun = $row['username'];
+        $tahun_pembuatan = $row['tahun_pembuatan'];
+        $ukuran_dimensi = $row['ukuran'];
+        $media_lukis = $row['media'];
+        $deskripsi = $row['deskripsi'];
+        $gambar = $row['gambar']; // atau kolom yang sesuai dengan gambar lukisan
+
+        // Menyimpan ke session jika perlu
+        $_SESSION['nama_lukisan'] = $nama_lukisan;
+        // ...
+
+    } else {
+        // Handle jika lukisan tidak ditemukan
+        echo "Lukisan tidak ditemukan.";
+        exit; // atau redirect ke halaman lain
+    }
+
+    $conn->close();
+} else {
+    // Handle jika parameter ID tidak ada
+    echo "Parameter ID tidak ditemukan.";
+    exit; // atau redirect ke halaman lain
+}
+?>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artwork Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #181818;
+            color: white;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background-color: #282828;
+            padding: 20px;
+            border-radius: 10px;
+            position: relative;
+        }
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        .image-placeholder {
+            width: 100%;
+            height: 300px;
+            background-color: #404040;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .icons {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .icon {
+            cursor: pointer;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        .icon .comment-count {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background-color: red;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 5px;
+            font-size: 12px;
+        }
+        .icon .like-count {
+            margin-left: 5px;
+        }
+        .details, .description, .comment-section {
+            margin-bottom: 20px;
+        }
+        .comment-section {
+            display: none;
+        }
+        .comment-list {
+            margin-top: 10px;
+        }
+        .comment {
+            background-color: #404040;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            position: relative;
+        }
+        .comment .user {
+            font-weight: bold;
+        }
+        .comment .timestamp {
+            font-size: 0.8em;
+            color: #b0b0b0;
+        }
+        .comment .text {
+            margin-top: 5px;
+        }
+        .comment .actions {
+            display: flex;
+            gap: 10px;
+        }
+        .comment .actions button {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+        .comment .likes {
+            display: flex;
+            align-items: center;
+            position: absolute;
+            left: 10px; /* Posisi tombol like di sebelah kiri */
+            bottom: 10px;
+        }
+        .comment .likes span {
+            margin-left: 5px;
+        }
+        .reply {
+            margin-left: 20px;
+            border-left: 2px solid #505050;
+            padding-left: 10px;
+        }
+        .reply-form {
+            margin-left: 20px;
+            margin-top: 10px;
+            display: none;
+        }
+        .comment-form, .reply-form {
+            display: flex;
+            flex-direction: column;
+        }
+        .comment-form textarea, .reply-form textarea {
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .comment-form button, .reply-form button {
+            align-self: flex-end;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: red;
+            color: white;
+            cursor: pointer;
+        }
+        .edit-mode {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <span class="close-button" id="close-button">&times;</span>
+    <h1><?php echo $nama_lukisan; ?></h1>
+    <h2>Karya <?php echo $nama_akun; ?></h2>
+    <div class="image-placeholder">
+        <img src="<?php echo $gambar; ?>" alt="Artwork Image">
+    </div>
+    <div class="icons">
+        <span class="icon" id="post-like-icon">&#9825;<span class="like-count" id="post-like-count">0</span></span>
+        <span class="icon" id="comment-icon">&#128172;<span class="comment-count" id="comment-count">0</span></span>
+        <span class="icon">&#9654;</span>
+        <span class="icon">&#128257;</span>
+    </div>
+    <div class="details">
+    <p><strong>Tahun</strong> : <?php echo $tahun_pembuatan; ?></p>
+        <p><strong>Ukuran</strong> : <?php echo $ukuran_dimensi; ?></p>
+        <p><strong>Media</strong> : <?php echo $media_lukis; ?></p>
+    </div>
+    <div class="description">
+        <?php echo $deskripsi; ?>
+    </div>
+    <div class="comment-section" id="comment-section">
+        <h3>Komentar</h3>
+        <form id="comment-form" class="comment-form">
+            <textarea id="comment-input" rows="3" placeholder="Tambahkan komentar Anda di sini..."></textarea>
+            <button type="submit">Kirim</button>
+        </form>
+        <div class="comment-list" id="comment-list"></div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const closeButton = document.getElementById('close-button');
+        const commentIcon = document.getElementById('comment-icon');
+        const postLikeIcon = document.getElementById('post-like-icon');
+        const commentForm = document.getElementById('comment-form');
+        
+        closeButton.addEventListener('click', closeDetailContainer);
+        commentIcon.addEventListener('click', toggleCommentSection);
+        postLikeIcon.addEventListener('click', likePost);
+        commentForm.addEventListener('submit', handleCommentFormSubmit);
+        
+        loadCommentsFromLocalStorage();
+        updateCommentCount();
+    });
+
+    function closeDetailContainer() {
+        const detailContainer = document.querySelector('.container');
+        detailContainer.style.display = 'none';
+    }
+
+    function toggleCommentSection() {
+        const commentSection = document.getElementById('comment-section');
+        commentSection.style.display = commentSection.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function likePost() {
+        const postLikeCountSpan = document.getElementById('post-like-count');
+        postLikeCountSpan.textContent = parseInt(postLikeCountSpan.textContent) + 1;
+    }
+
+    function handleCommentFormSubmit(event) {
+        event.preventDefault();
+        const commentInput = document.getElementById('comment-input');
+        const commentText = commentInput.value.trim();
+        
+        if (commentText) {
+            addComment(commentText, 'User', new Date().toLocaleString(), [], null);
+            commentInput.value = '';
+            updateCommentCount();
+            saveCommentsToLocalStorage();
+        }
+    }
+
+    function addComment(commentText, user, timestamp, replies, parentElement) {
+        const commentList = parentElement ? parentElement.querySelector('.comment-list') : document.getElementById('comment-list');
+        const newComment = document.createElement('div');
+        newComment.classList.add('comment');
+        newComment.dataset.commentId = generateUniqueId(); // Add unique ID to comment
+        
+        const likesDiv = document.createElement('div');
+        likesDiv.classList.add('likes');
+        likesDiv.innerHTML = '&#9829;<span>0</span>';
+        
+        const userDiv = document.createElement('div');
+        userDiv.classList.add('user');
+        userDiv.textContent = user;
+        
+        const timestampDiv = document.createElement('div');
+        timestampDiv.classList.add('timestamp');
+        timestampDiv.textContent = timestamp;
+        
+        const textDiv = document.createElement('div');
+        textDiv.classList.add('text');
+        textDiv.textContent = commentText;
+        
+        const actionsDiv = createActionsDiv(newComment, textDiv);
+        
+        const replyForm = createReplyForm(newComment);
+        
+        const replyList = document.createElement('div');
+        replyList.classList.add('comment-list');
+        
+        if (parentElement) {
+            newComment.classList.add('reply');
+        }
+        
+        newComment.append(likesDiv, userDiv, timestampDiv, textDiv, actionsDiv, replyForm, replyList); // Menempatkan likesDiv di depan
+        commentList.appendChild(newComment);
+        
+        replies.forEach(reply => {
+            addComment(reply.text, reply.user, reply.timestamp, reply.replies, newComment);
+        });
+        
+        saveCommentsToLocalStorage();
+    }
+
+    function createActionsDiv(commentElement, textDiv) {
+        const actionsDiv = document.createElement('div');
+        actionsDiv.classList.add('actions');
+
+        const likeButton = document.createElement('button');
+        likeButton.textContent = 'Like';
+        likeButton.addEventListener('click', () => {
+            likeComment(likeButton, commentElement);
+        });
+
+        const replyButton = document.createElement('button');
+        replyButton.textContent = 'Reply';
+        replyButton.addEventListener('click', () => {
+            toggleReplyForm(commentElement);
+        });
+
+        const editButton = document.createElement('button');
+        editButton.textContent = 'Edit';
+        editButton.addEventListener('click', () => {
+            editComment(textDiv, commentElement);
+        });
+
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = 'Delete';
+        deleteButton.addEventListener('click', () => {
+            deleteComment(commentElement);
+        });
+
+        const reportButton = document.createElement('button');
+        reportButton.textContent = 'Report';
+        reportButton.addEventListener('click', () => {
+            reportComment(commentElement);
+        });
+
+        actionsDiv.append(likeButton, replyButton, editButton, deleteButton, reportButton);
+        
+        return actionsDiv;
+    }
+
+    function createReplyForm(commentElement) {
+        const replyForm = document.createElement('form');
+        replyForm.classList.add('reply-form');
+        replyForm.innerHTML = `
+            <textarea rows="2" placeholder="Add a reply..."></textarea>
+            <button type="submit">Reply</button>
+        `;
+        replyForm.addEventListener('submit', (event) => {
+            handleReplyFormSubmit(event, commentElement);
+        });
+        return replyForm;
+    }
+
+    function handleReplyFormSubmit(event, commentElement) {
+        event.preventDefault();
+        const replyInput = event.target.querySelector('textarea');
+        const replyText = replyInput.value.trim();
+        
+        if (replyText) {
+            addComment(replyText, 'User', new Date().toLocaleString(), [], commentElement);
+            replyInput.value = '';
+            updateCommentCount();
+            saveCommentsToLocalStorage();
+        }
+    }
+
+    function toggleReplyForm(commentElement) {
+        const replyForm = commentElement.querySelector('.reply-form');
+        replyForm.style.display = replyForm.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function editComment(textDiv, commentElement) {
+        const isEditing = commentElement.classList.contains('editing');
+        commentElement.classList.toggle('editing', !isEditing);
+
+        if (isEditing) {
+            const textarea = commentElement.querySelector('.edit-mode textarea');
+            textDiv.textContent = textarea.value.trim();
+            textarea.remove();
+        } else {
+            const textarea = document.createElement('textarea');
+            textarea.rows = 3;
+            textarea.value = textDiv.textContent.trim();
+            textDiv.innerHTML = '';
+            textDiv.appendChild(textarea);
+        }
+        saveCommentsToLocalStorage();
+    }
+
+    function deleteComment(commentElement) {
+        commentElement.remove();
+        updateCommentCount();
+        saveCommentsToLocalStorage();
+    }
+
+    function likeComment(button, commentElement) {
+        const likesSpan = commentElement.querySelector('.likes span');
+        likesSpan.textContent = parseInt(likesSpan.textContent) + 1;
+        saveCommentsToLocalStorage();
+    }
+
+    function reportComment(commentElement) {
+        alert('Comment reported.');
+    }
+
+    function updateCommentCount() {
+        const commentCount = document.getElementById('comment-count');
+        const comments = document.querySelectorAll('.comment:not(.reply)').length;
+        commentCount.textContent = comments;
+    }
+
+    function saveCommentsToLocalStorage() {
+        const comments = Array.from(document.querySelectorAll('.comment:not(.reply)')).map(commentElement => {
+            const textDiv = commentElement.querySelector('.text');
+            const userDiv = commentElement.querySelector('.user');
+            const timestampDiv = commentElement.querySelector('.timestamp');
+            const likesSpan = commentElement.querySelector('.likes span');
+            const replyList = commentElement.querySelector('.comment-list');
+            const replies = getReplies(replyList);
+            return {
+                id: commentElement.dataset.commentId,
+                text: textDiv.textContent.trim(),
+                user: userDiv.textContent.trim(),
+                timestamp: timestampDiv.textContent.trim(),
+                likes: parseInt(likesSpan.textContent),
+                replies: replies
+            };
+        });
+        localStorage.setItem('comments', JSON.stringify(comments));
+    }
+
+    function getReplies(replyList) {
+        return Array.from(replyList.children).map(replyElement => {
+            const textDiv = replyElement.querySelector('.text');
+            const userDiv = replyElement.querySelector('.user');
+            const timestampDiv = replyElement.querySelector('.timestamp');
+            const likesSpan = replyElement.querySelector('.likes span');
+            const nestedReplyList = replyElement.querySelector('.comment-list');
+            const nestedReplies = getReplies(nestedReplyList);
+            return {
+                id: replyElement.dataset.commentId,
+                text: textDiv.textContent.trim(),
+                user: userDiv.textContent.trim(),
+                timestamp: timestampDiv.textContent.trim(),
+                likes: parseInt(likesSpan.textContent),
+                replies: nestedReplies
+            };
+        });
+    }
+
+    function loadCommentsFromLocalStorage() {
+        const comments = JSON.parse(localStorage.getItem('comments')) || [];
+        comments.forEach(comment => {
+            addComment(comment.text, comment.user, comment.timestamp, comment.replies, null);
+        });
+    }
+
+    function generateUniqueId() {
+        return 'comment-' + Date.now() + '-' + Math.floor(Math.random() * 1000);
+    }
+</script>
+
+</body>
+</html>

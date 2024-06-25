@@ -119,7 +119,9 @@ if ($result->num_rows > 0) {
                 <div class="container mt-5">
                     <h2>Popular Arts</h2>
                     <div class="row">
-                        <?php foreach ($images as $image): ?>
+                        <a href="ArtworkDetail.php?id=<?php echo $row['id']; ?>">
+                            <?php foreach ($images as $image): ?>
+                        </a>
                         <div class="col-md-4">
                             <div class="card mb-4 box-shadow">
                                 <img class="card-img-top" src="<?php echo $image['gambar']; ?>" alt="Artwork Image">
@@ -142,7 +144,9 @@ if ($result->num_rows > 0) {
             <div id="internasionalContent" style="display: none;">
                 <div class="container mt-5">
                     <div class="row">
-                        <?php foreach ($images as $image): ?>
+                        <a href="ArtworkDetail.php?id=<?php echo $row['id']; ?>">
+                            <?php foreach ($images as $image): ?>
+                        </a>
                         <div class="col-md-4">
                             <div class="card mb-4 box-shadow">
                                 <img class="card-img-top" src="<?php echo $image['gambar']; ?>" alt="Artwork Image">
@@ -165,7 +169,9 @@ if ($result->num_rows > 0) {
             <div id="nasionalContent" style="display: none;">
                 <div class="container mt-5">
                     <div class="row">
-                        <?php foreach ($images as $image): ?>
+                        <a href="ArtworkDetail.php?id=<?php echo $row['id']; ?>">
+                            <?php foreach ($images as $image): ?>
+                        </a>
                             <div class="col-md-4">
                                 <div class="card mb-4 box-shadow">
                                     <img class="card-img-top" src="<?php echo $image['gambar']; ?>" alt="Artwork Image">
