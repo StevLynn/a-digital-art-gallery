@@ -9,7 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $instagram = $_POST['instagram'];
     $twitter = $_POST['twitter'];
     $youtube = $_POST['youtube'];
-    $profile_image = $_POST['profile_image'];
+    $profile_image = ''; // Initialize profile image variable
 
     // Handle file upload
     if (!empty($_FILES['profile_image_file']['name'])) {

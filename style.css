@@ -154,27 +154,98 @@ nav{
     transition: all ease-in .2s;
 }
 
+/* menu home */
+.main, main{
+    margin-left: 200px;
+    flex: 1;
+    overflow-y: auto;
+}
+.card-main{
+    padding-bottom: 20px;
+}
+.menu_home{
+    padding-top: 20px;
+    text-align: center;
+}
+.menu_home a{
+    font-size: 20px;
+    margin: 0 2rem;
+    font-weight: 700;
+    transition: all ease-in .2s;
+}
+.menu_home a:hover{
+    color: var(--primary) !important;
+    border-bottom: 0.2rem solid var(--primary);
+    transition: all ease-in .2s;
+}
+
 /* home */
-.container-main{
+.container-main {
     margin: 50px;
 }
-/* home popular artist
-.popular_artist{
 
+.popular_artist {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
 }
-home popular artist
-.popular_art{
 
+.artist-card {
+    text-align: center;
 }
-home popular artist
-.recommendation{
 
+.artist-card img {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
 }
-home popular artist
-.late_art_post{
 
-} */
+.rounded-circle.bg-light {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px; 
+    height: 50px; 
+    border-radius: 50%;
+}
 
+.card {
+    margin-bottom: 50px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: relative;
+    img {
+        height: 200px;
+        width: 100%;
+    }
+}
+
+.col-md-4 {
+    margin-bottom: 50px;
+}
+
+.icon-container {
+    position: absolute;
+    bottom: -40px; 
+    right: 10px;
+}
+
+.icon-container button {
+    border: none;
+    color: #fff;
+    margin-left: 10px;
+    padding: 5px;
+    border-radius: 50%;
+    background-color: var(--backround);
+    
+}
+.name-container {
+    position: absolute;
+    bottom: -5px; 
+    left: 10px;
+    color: var(--font); 
+    font-size: 20px; 
+}
 /* follow */
 .user-icons {
     display: flex;
@@ -327,6 +398,8 @@ home popular artist
     }
 }
 
+
+
 /* account user */
 .profile-card {
     border-radius: 10px;
@@ -339,10 +412,6 @@ home popular artist
     flex-direction: column;
     align-items: center;
     position: relative;
-}
-.profile-icon i {
-    font-size: 100px;
-    color: #666;
 }
 .profile-stats {
     display: flex;
@@ -378,6 +447,17 @@ home popular artist
 }
 .profile-icon {
     position: relative;
+    i {
+        font-size: 100px;
+        margin: 20px auto;
+    }
+    img {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        object-fit: cover;
+        display: none;
+    }
 }
 .profile-icons {
     position: absolute;
@@ -517,12 +597,23 @@ home popular artist
 .profile-up {
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
-}
-
-.profile-up i {
-    font-size: 100px;
-    margin: 20px auto;
+    margin-left: 45%;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+        i {
+        font-size: 100px;
+        margin: 20px auto;
+    }
+        img {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        object-fit: cover;
+        display: none;
+    }
 }
 
 .profile-form {
