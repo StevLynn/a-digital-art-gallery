@@ -17,6 +17,20 @@ if ($result->num_rows > 0) {
     }
 }
 
+// Query untuk mengambil data pengguna
+$sql_users = "SELECT * FROM data_user";
+$result_users = $conn->query($sql_users);
+
+// Inisialisasi array untuk menyimpan data pengguna
+$users = [];
+if ($result_users->num_rows > 0) {
+    while ($row_user = $result_users->fetch_assoc()) {
+        // Simpan data pengguna ke dalam array
+        $users[$row_user['username']] = $row_user; // Gunakan username sebagai kunci
+    }
+}
+
+$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -115,14 +129,35 @@ if ($result->num_rows > 0) {
                 <div class="container mt-5">
                     <h2>Popular Artists</h2>
                     <div class="row">
-                        <div class="col-md-2">
-                            <div class="text-center">
-                                <div class="rounded-circle bg-light p-3">
-                                    <i class="fas fa-user fa-lg text-secondary"></i>
+                        <!-- Bagian dalam loop foreach untuk "Popular Artists" -->
+                        <?php foreach ($images as $image): ?>
+                            <div class="col-md-2">
+                                <div class="text-center">
+                                    <?php
+                                    // Ambil data pengguna berdasarkan username dari gambar
+                                    $username = $image['username'];
+                                    if (isset($users[$username])) {
+                                        $user = $users[$username];
+                                        $nama_pengguna = $user['username']; 
+                                        $profile_image = $user['profile_image'];
+                                    } else {
+                                        $nama_pengguna = 'Nama Pengguna';
+                                        $profile_image = 'default.jpg'; 
+                                    }
+                                    ?>
+
+                                    <!-- Menampilkan gambar profil pengguna -->
+                                    <div class="rounded-circle bg-light p-3">
+                                        <?php if (!empty($profile_image)) : ?>
+                                            <img src="<?php echo $profile_image; ?>" alt="Profile Image">
+                                        <?php else : ?>
+                                            <i class="fas fa-user fa-lg text-secondary"></i>
+                                        <?php endif; ?>
+                                    </div>
+                                    <p class="mt-2"><?php echo $nama_pengguna; ?></p>
                                 </div>
-                                <p class="mt-2">Artist 1</p>
                             </div>
-                        </div>
+                        <?php endforeach; ?>
                     </div>
                 </div>
 

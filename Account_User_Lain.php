@@ -1,67 +1,45 @@
 <?php
-session_start();
-if (!isset($_SESSION['username'])) {
-    header('location: Halaman_login.html');
+include 'connection.php';
+
+if (!isset($_GET['id'])) {
+    header('Location: Home.php');
     exit();
 }
 
-include 'connection.php';
+$user_id = $_GET['username'];
 
-$username = $_SESSION['username'];
+// Query untuk mengambil informasi pengguna berdasarkan ID
+$sql = "SELECT * FROM data_user WHERE username = $user_id";
+$result = $conn->query($sql);
 
-// Query untuk mengambil data profil pengguna
-$sql_profile = "SELECT * FROM `data_user` WHERE `username` = ?";
-$stmt_profile = $conn->prepare($sql_profile);
-if ($stmt_profile === false) {
-    die("Error preparing statement: " . $conn->error);
-}
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    // Tampilkan informasi pengguna sesuai kebutuhan Anda
+    $username = $row['username'];
+    $profile_image = $row['profile_image'];
+    $description = $row['description'];
+    $instagram = $row['instagram'];
+    $twitter = $row['twitter'];
+    $youtube = $row['youtube'];
 
-$stmt_profile->bind_param("s", $username);
-$stmt_profile->execute();
-$result_profile = $stmt_profile->get_result();
+    // Query for stats
+    $sql_stats = "SELECT COUNT(*) AS total_likes FROM likes WHERE user_id = $user_id";
+    $result_stats = $conn->query($sql_stats);
+    $total_likes = ($result_stats && $result_stats->num_rows > 0) ? $result_stats->fetch_assoc()['total_likes'] : 0;
 
-if ($result_profile->num_rows > 0) {
-    $row_profile = $result_profile->fetch_assoc();
-    $nama = $row_profile['nama'];
-    $description = $row_profile['description'];
-    $instagram = $row_profile['instagram'];
-    $twitter = $row_profile['twitter'];
-    $youtube = $row_profile['youtube'];
-    $profile_image = $row_profile['profile_image'];
+    $sql_followers = "SELECT COUNT(*) AS total_followers FROM follow WHERE following_id = $user_id";
+    $result_followers = $conn->query($sql_followers);
+    $total_followers = ($result_followers && $result_followers->num_rows > 0) ? $result_followers->fetch_assoc()['total_followers'] : 0;
+
+    $sql_following = "SELECT COUNT(*) AS total_following FROM follow WHERE follower_id = $user_id";
+    $result_following = $conn->query($sql_following);
+    $total_following = ($result_following && $result_following->num_rows > 0) ? $result_following->fetch_assoc()['total_following'] : 0;
+
 } else {
-    echo "Data profil tidak ditemukan untuk pengguna ini.";
-    // Atur nilai default jika tidak ditemukan
-    $nama = 'Nama';
-    $description = 'Deskripsi singkat . . . . . . ()';
-    $instagram = '#';
-    $twitter = '#';
-    $youtube = '#';
-    $profile_image = 'default.jpg'; // Ganti dengan path gambar default
+    echo "Pengguna tidak ditemukan.";
+    exit();
 }
 
-$stmt_profile->close();
-
-// Query untuk mengambil data gambar (lukisan) dengan status 'success' milik pengguna tertentu
-$sql_images = "SELECT * FROM lukisan WHERE status = 'success' AND username = ?";
-$stmt_images = $conn->prepare($sql_images);
-if ($stmt_images === false) {
-    die("Error preparing statement: " . $conn->error);
-}
-
-$stmt_images->bind_param("s", $username);
-$stmt_images->execute();
-$result_images = $stmt_images->get_result();
-
-// Inisialisasi array untuk menyimpan hasil query gambar
-$images = [];
-
-if ($result_images->num_rows > 0) {
-    while ($row_image = $result_images->fetch_assoc()) {
-        $images[] = $row_image; // Menyimpan semua data baris dari hasil query
-    }
-}
-
-$stmt_images->close();
 $conn->close();
 ?>
 
@@ -146,6 +124,7 @@ $conn->close();
     </div>
     <main>
         <section class="profile-card">
+            <!-- Bagian Header Profil -->
             <div class="profile-header">
                 <div class="profile-icon">
                     <?php if (!empty($profile_image)) : ?>
@@ -154,29 +133,30 @@ $conn->close();
                         <i class="fas fa-user-circle" id="profile-icon"></i>
                     <?php endif; ?>
                 </div>
-                <h2><?php echo $nama; ?></h2>
+                <h2><?php echo $username; ?></h2>
                 <div class="profile-stats">
-                    <div>0<br>Suka</div>
-                    <div>0<br>Pengikut</div>
-                    <div>0<br>Mengikuti</div>
-                </div>
-                <div class="profile-icons">
-                    <a href="Upload.php"> <i class="fa-solid fa-arrow-up-from-bracket"></i> </a>
-                    <a href="Logout.php"> <i class="fa-solid fa-right-from-bracket"></i> </a>
+                    <div><?php echo $total_likes; ?><br>Suka</div>
+                    <div><?php echo $total_followers; ?><br>Pengikut</div>
+                    <div><?php echo $total_following; ?><br>Mengikuti</div>
                 </div>
             </div>
 
+            <!-- Deskripsi Profil -->
             <div class="profile-description">
                 <p><?php echo $description; ?></p>
                 <p>
-                <?php if ($instagram != '#' && !empty($instagram)): ?><a href="<?php echo $instagram; ?>"><i class="fab fa-instagram"></i></a><?php endif; ?>
-                <?php if ($twitter != '#' && !empty($twitter)): ?><a href="<?php echo $twitter; ?>"><i class="fab fa-twitter"></i></a><?php endif; ?>
-                <?php if ($youtube != '#' && !empty($youtube)): ?><a href="<?php echo $youtube; ?>"><i class="fab fa-youtube"></i></a><?php endif; ?>
+                    <?php if ($instagram != '#' && !empty($instagram)): ?><a href="<?php echo $instagram; ?>"><i class="fab fa-instagram"></i></a><?php endif; ?>
+                    <?php if ($twitter != '#' && !empty($twitter)): ?><a href="<?php echo $twitter; ?>"><i class="fab fa-twitter"></i></a><?php endif; ?>
+                    <?php if ($youtube != '#' && !empty($youtube)): ?><a href="<?php echo $youtube; ?>"><i class="fab fa-youtube"></i></a><?php endif; ?>
                 </p>
             </div>
 
+            <!-- Tombol Follow -->
             <div class="profile-actions">
-                <button> <a href="Edit_profil_pengguna.php"> Edit profile <i class="fas fa-edit"></i></a></button>
+                <form action="user_follow.php" method="post"> <!-- Ganti follow.php dengan nama file yang sesuai -->
+                    <input type="hidden" name="following_id" value="<?php echo $user_id; ?>">
+                    <button type="submit">Follow</button>
+                </form>
             </div>
 
             <div class="additional-icons">

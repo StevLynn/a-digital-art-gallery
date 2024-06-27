@@ -56,7 +56,7 @@ if ($result && $result->num_rows > 0) {
             <div class="mb-3">
                 <h3>About User</h3>
                 <label for="new_username" class="form-label">Username</label>
-                <input type="text" class="form-control" id="new_username" name="new_username" value="<?php echo $username; ?>" readonly>
+                <input type="text" class="form-control" id="new_username" name="new_username" value="<?php echo $username; ?>" >
 
                 <?php if(isset($_SESSION['error'])): ?>
                     <div class="alert alert-danger" role="alert">
@@ -69,8 +69,10 @@ if ($result && $result->num_rows > 0) {
                         <?php echo $_SESSION['success']; unset($_SESSION['success']); ?>
                     </div>
                 <?php endif; ?>
-            </div>
-            <div class="mb-3">
+                
+                <!-- <label for="nama" class="form-label">Name</label>
+                <input type="text" class="form-control" id="nama" name="nama" value="<?php echo $nama; ?>"> -->
+
                 <label for="description" class="form-label">Self description</label>
                 <input type="text" class="form-control" id="description" name="description" value="<?php echo $description; ?>">
             </div>
