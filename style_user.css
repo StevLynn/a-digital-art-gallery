@@ -590,12 +590,23 @@ nav{
 .profile-up {
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
-}
-
-.profile-up i {
-    font-size: 100px;
-    margin: 20px auto;
+    margin-left: 45%;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+        i {
+        font-size: 100px;
+        margin: 20px auto;
+    }
+        img {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        object-fit: cover;
+        display: none;
+    }
 }
 
 .profile-form {

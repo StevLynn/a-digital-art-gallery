@@ -1,5 +1,4 @@
 <?php
-// Assuming you have a database connection file
 include 'connection.php';
 session_start(); // Start the session
 
@@ -30,55 +29,71 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($check !== false) {
             $uploadOk = 1;
         } else {
-            echo "File is not an image.";
+            $_SESSION['error'] = "File is not an image.";
             $uploadOk = 0;
         }
 
         // Check file size (limit to 5MB)
         if ($_FILES["profile_image_file"]["size"] > 5000000) {
-            echo "Sorry, your file is too large.";
+            $_SESSION['error'] = "Sorry, your file is too large.";
             $uploadOk = 0;
         }
 
         // Allow certain file formats
         if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
-            echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+            $_SESSION['error'] = "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
             $uploadOk = 0;
         }
 
         // Check if $uploadOk is set to 0 by an error
         if ($uploadOk == 0) {
-            echo "Sorry, your file was not uploaded.";
+            $_SESSION['error'] = "Sorry, your file was not uploaded.";
         // if everything is ok, try to upload file
         } else {
             if (move_uploaded_file($_FILES["profile_image_file"]["tmp_name"], $target_file)) {
                 $profile_image = $target_file; // Use the file path as the profile image URL
             } else {
-                echo "Sorry, there was an error uploading your file.";
+                $_SESSION['error'] = "Sorry, there was an error uploading your file.";
             }
         }
     }
 
-    // Update query - modify according to your table structure
-    $sql = "UPDATE data_user SET username=?, description=?, instagram=?, twitter=?, youtube=?, profile_image=? WHERE username=?";
+    // Check if new username already exists in the database
+    $sql = "SELECT COUNT(*) FROM data_user WHERE username = ? AND username != ?";
     $stmt = $conn->prepare($sql);
     if ($stmt === false) {
         die("Error preparing statement: " . $conn->error);
     }
-    $stmt->bind_param("sssssss", $new_username, $description, $instagram, $twitter, $youtube, $profile_image, $old_username);
+    $stmt->bind_param("ss", $new_username, $old_username);
+    $stmt->execute();
+    $stmt->bind_result($count);
+    $stmt->fetch();
+    $stmt->close();
 
-    if ($stmt->execute()) {
-        echo "Profile updated successfully!";
-        // Update session username if the username was changed
-        $_SESSION['username'] = $new_username;
-        // Redirect back to the previous page
-        header("Location: " . $_SERVER['HTTP_REFERER']);
-        exit();
+    if ($count > 0) {
+        $_SESSION['error'] = "Sorry, that username is already taken.";
     } else {
-        echo "Error updating profile: " . $stmt->error;
+        // Update query - modify according to your table structure
+        $sql = "UPDATE data_user SET username=?, description=?, instagram=?, twitter=?, youtube=?, profile_image=? WHERE username=?";
+        $stmt = $conn->prepare($sql);
+        if ($stmt === false) {
+            die("Error preparing statement: " . $conn->error);
+        }
+        $stmt->bind_param("sssssss", $new_username, $description, $instagram, $twitter, $youtube, $profile_image, $old_username);
+
+        if ($stmt->execute()) {
+            $_SESSION['success'] = "Profile updated successfully!";
+            // Update session username if the username was changed
+            $_SESSION['username'] = $new_username;
+        } else {
+            $_SESSION['error'] = "Error updating profile: " . $stmt->error;
+        }
+
+        $stmt->close();
     }
 
-    $stmt->close();
     $conn->close();
+    header("Location: Edit_profil_pengguna.php");
+    exit();
 }
 ?>

@@ -41,6 +41,7 @@ if(!isset($_SESSION['username'])) {
                         <span>Search</span>
                     </a>
                 </ul>
+                <?php if (isset($_SESSION['username'])): ?>
                 <ul class="sidebar-item">
                     <a href="Upload.php">
                         <i class="fa-solid fa-arrow-up-from-bracket"></i>
@@ -59,7 +60,17 @@ if(!isset($_SESSION['username'])) {
                         <span>Notification</span>
                     </a>
                 </ul>
+                <?php endif; ?>
+                <?php if (!isset($_SESSION['username'])): ?>
+                <ul class="sidebar-item">
+                    <a href="Halaman_login.html">
+                    <i class="fa-solid fa-right-to-bracket"></i>
+                        <span>Login</span>
+                    </a>
+                </ul>
+                <?php endif; ?>
             </div>
+            <?php if (isset($_SESSION['username'])): ?>
             <ul class="user">
                 <a href="Account_User.php">
                     <i class="fa-solid fa-user"></i>
@@ -67,11 +78,12 @@ if(!isset($_SESSION['username'])) {
                 </a>
             </ul>
             <ul class="setting">
-                <a href="Settings.html">
-                    <i class="fa-solid fa-gear"></i>
-                    <span>Settings</span>
+                <a href="Logout.php">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span>Logout</span>
                 </a>
             </ul>
+            <?php endif; ?>
         </aside>
     </div>
 
