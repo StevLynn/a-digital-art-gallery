@@ -85,7 +85,7 @@ $failedCount = $rowFailed['count'];
                 </ul>
 
                 <ul class="sidebar-item">
-                    <a href="Persetujuan_Postingan_Admin.html">
+                    <a href="Persetujuan_Postingan_Admin.php">
                         <i class="fa-solid fa-paint-brush"></i>
                         <span>Post Management</span>
                     </a>

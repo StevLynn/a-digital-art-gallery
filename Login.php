@@ -26,7 +26,7 @@
             exit();
         } elseif ($stmt_admin->fetch() && $password == $password_admin) {
             $_SESSION['username'] = $db_username_admin;
-            header("Location: Dashboard_Admin.html");
+            header("Location: Dashboard_admin.php");
             exit();
         } else {
             echo "Username atau password salah.";

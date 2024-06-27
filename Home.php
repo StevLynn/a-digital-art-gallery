@@ -127,9 +127,32 @@ if ($result->num_rows > 0) {
                                 <img class="card-img-top" src="<?php echo $image['gambar']; ?>" alt="Artwork Image">
                                 <div class="icon-container">
                                     <button type="button"><i class="fas fa-heart fa-lg"></i></button>
-                                    <button type="button"><i class="fas fa-comment fa-lg"></i></button>
+                                    <!-- <button type="button"><i class="fas fa-comment fa-lg"></i></button>
                                     <button type="button"><i class="fas fa-share fa-lg"></i></button>
-                                    <button type="button"><i class="fas fa-download fa-lg"></i></button>
+                                    <button type="button"><i class="fas fa-download fa-lg"></i></button> -->
+                                </div>
+                            </div>
+                            <div class="name-container">
+                                <span><?php echo $image['title_lukisan']; ?></span>
+                            </div>
+                        </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+                <div class="container mt-5">
+                    <h2>Late Post</h2>
+                    <div class="row">
+                        <a href="ArtworkDetail.php?id=<?php echo $row['id']; ?>">
+                            <?php foreach ($images as $image): ?>
+                        </a>
+                        <div class="col-md-4">
+                            <div class="card mb-4 box-shadow">
+                                <img class="card-img-top" src="<?php echo $image['gambar']; ?>" alt="Artwork Image">
+                                <div class="icon-container">
+                                    <button type="button"><i class="fas fa-heart fa-lg"></i></button>
+                                    <!-- <button type="button"><i class="fas fa-comment fa-lg"></i></button>
+                                    <button type="button"><i class="fas fa-share fa-lg"></i></button>
+                                    <button type="button"><i class="fas fa-download fa-lg"></i></button> -->
                                 </div>
                             </div>
                             <div class="name-container">
@@ -152,9 +175,9 @@ if ($result->num_rows > 0) {
                                 <img class="card-img-top" src="<?php echo $image['gambar']; ?>" alt="Artwork Image">
                                 <div class="icon-container">
                                     <button type="button"><i class="fas fa-heart fa-lg"></i></button>
-                                    <button type="button"><i class="fas fa-comment fa-lg"></i></button>
+                                    <!-- <button type="button"><i class="fas fa-comment fa-lg"></i></button>
                                     <button type="button"><i class="fas fa-share fa-lg"></i></button>
-                                    <button type="button"><i class="fas fa-download fa-lg"></i></button>
+                                    <button type="button"><i class="fas fa-download fa-lg"></i></button> -->
                                 </div>
                             </div>
                             <div class="name-container">
@@ -177,9 +200,9 @@ if ($result->num_rows > 0) {
                                     <img class="card-img-top" src="<?php echo $image['gambar']; ?>" alt="Artwork Image">
                                     <div class="icon-container">
                                         <button type="button"><i class="fas fa-heart fa-lg"></i></button>
-                                        <button type="button"><i class="fas fa-comment fa-lg"></i></button>
+                                        <!-- <button type="button"><i class="fas fa-comment fa-lg"></i></button>
                                         <button type="button"><i class="fas fa-share fa-lg"></i></button>
-                                        <button type="button"><i class="fas fa-download fa-lg"></i></button>
+                                        <button type="button"><i class="fas fa-download fa-lg"></i></button> -->
                                     </div>
                                 </div>
                                 <div class="name-container">
