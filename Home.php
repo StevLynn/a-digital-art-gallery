@@ -7,6 +7,19 @@ include 'connection.php';
 $sql = "SELECT * FROM lukisan WHERE status = 'success'";
 $result = $conn->query($sql);
 
+// Query untuk mengambil data pengguna
+$sql_users = "SELECT * FROM data_user";
+$result_users = $conn->query($sql_users);
+
+// Inisialisasi array untuk menyimpan data pengguna
+$users = [];
+if ($result_users->num_rows > 0) {
+    while ($row_user = $result_users->fetch_assoc()) {
+        // Simpan data pengguna ke dalam array
+        $users[$row_user['username']] = $row_user; // Gunakan username sebagai kunci
+    }
+}
+
 // Inisialisasi array untuk menyimpan hasil query
 $images = [];
 
@@ -56,6 +69,7 @@ if ($result->num_rows > 0) {
                         <span>Search</span>
                     </a>
                 </ul>
+                <?php if (isset($_SESSION['username'])): ?>
                 <ul class="sidebar-item">
                     <a href="Upload.php">
                         <i class="fa-solid fa-arrow-up-from-bracket"></i>
@@ -74,18 +88,27 @@ if ($result->num_rows > 0) {
                         <span>Notification</span>
                     </a>
                 </ul>
+                <?php endif; ?>
+                <?php if (!isset($_SESSION['username'])): ?>
+                <ul class="sidebar-item">
+                    <a href="Halaman_login.html">
+                    <i class="fa-solid fa-right-to-bracket"></i>
+                        <span>Login</span>
+                    </a>
+                </ul>
+                <?php endif; ?>
             </div>
+            <?php if (isset($_SESSION['username'])): ?>
             <ul class="user">
                 <a href="Account_User.php">
                     <i class="fa-solid fa-user"></i>
                     <span>Profile</span>
                 </a>
             </ul>
-            <?php if (isset($_SESSION['username'])): ?>
             <ul class="setting">
-                <a href="Settings.html">
-                    <i class="fa-solid fa-gear"></i>
-                    <span>Settings</span>
+                <a href="Logout.php">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span>Logout</span>
                 </a>
             </ul>
             <?php endif; ?>
@@ -104,14 +127,35 @@ if ($result->num_rows > 0) {
                 <div class="container mt-5">
                     <h2>Popular Artists</h2>
                     <div class="row">
-                        <div class="col-md-2">
-                            <div class="text-center">
-                                <div class="rounded-circle bg-light p-3">
-                                    <i class="fas fa-user fa-lg text-secondary"></i>
+                        <!-- Bagian dalam loop foreach untuk "Popular Artists" -->
+                        <?php foreach ($images as $image): ?>
+                            <div class="col-md-2">
+                                <div class="text-center">
+                                    <?php
+                                    // Ambil data pengguna berdasarkan username dari gambar
+                                    $username = $image['username'];
+                                    if (isset($users[$username])) {
+                                        $user = $users[$username];
+                                        $nama_pengguna = $user['username']; 
+                                        $profile_image = $user['profile_image'];
+                                    } else {
+                                        $nama_pengguna = 'Nama Pengguna';
+                                        $profile_image = 'default.jpg'; 
+                                    }
+                                    ?>
+
+                                    <!-- Menampilkan gambar profil pengguna -->
+                                    <div class="rounded-circle bg-light p-3">
+                                        <?php if (!empty($profile_image)) : ?>
+                                            <img src="<?php echo $profile_image; ?>" alt="Profile Image">
+                                        <?php else : ?>
+                                            <i class="fas fa-user fa-lg text-secondary"></i>
+                                        <?php endif; ?>
+                                    </div>
+                                    <p class="mt-2"><?php echo $nama_pengguna; ?></p>
                                 </div>
-                                <p class="mt-2">Artist 1</p>
                             </div>
-                        </div>
+                        <?php endforeach; ?>
                     </div>
                 </div>
 
@@ -121,7 +165,7 @@ if ($result->num_rows > 0) {
                         <?php foreach ($images as $image): ?>
                         <div class="col-md-4">
                             <div class="card mb-4 box-shadow">
-                                <a href="artwork_detail.php?id=<?php echo $image['id']; ?>">
+                                <a href="artwork_detail1.php?id_lukisan=<?php echo $image['id_lukisan']; ?>">
                                     <img class="card-img-top" src="<?php echo $image['gambar']; ?>" alt="Artwork Image">
                                 </a>
                                 <div class="icon-container">
@@ -144,7 +188,7 @@ if ($result->num_rows > 0) {
                         <?php foreach ($images as $image): ?>
                         <div class="col-md-4">
                             <div class="card mb-4 box-shadow">
-                                <a href="artwork_detail.php?id=<?php echo $image['id']; ?>">
+                                <a href="artwork_detail1.php?id_lukisan=<?php echo $image['id_lukisan']; ?>">
                                     <img class="card-img-top" src="<?php echo $image['gambar']; ?>" alt="Artwork Image">
                                 </a>
                                 <div class="icon-container">
@@ -169,7 +213,7 @@ if ($result->num_rows > 0) {
                         <?php foreach ($images as $image): ?>
                         <div class="col-md-4">
                             <div class="card mb-4 box-shadow">
-                                <a href="artwork_detail.php?id=<?php echo $image['id']; ?>">
+                                <a href="artwork_detail1.php?id_lukisan=<?php echo $image['id_lukisan']; ?>">
                                     <img class="card-img-top" src="<?php echo $image['gambar']; ?>" alt="Artwork Image">
                                 </a>
                                 <div class="icon-container">
@@ -194,7 +238,7 @@ if ($result->num_rows > 0) {
                         <?php foreach ($images as $image): ?>
                         <div class="col-md-4">
                             <div class="card mb-4 box-shadow">
-                                <a href="artwork_detail.php?id=<?php echo $image['id']; ?>">
+                                <a href="artwork_detail1.php?id_lukisan=<?php echo $image['id_lukisan']; ?>">
                                     <img class="card-img-top" src="<?php echo $image['gambar']; ?>" alt="Artwork Image">
                                 </a>
                                 <div class="icon-container">

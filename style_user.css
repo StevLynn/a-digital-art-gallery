@@ -241,10 +241,12 @@ nav{
 }
 .name-container {
     position: absolute;
-    bottom: -5px; 
     left: 10px;
     color: var(--font); 
     font-size: 20px; 
+    span {
+        padding-top: 20px;
+    }
 }
 /* follow */
 .user-icons {

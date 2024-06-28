@@ -2,15 +2,14 @@
 session_start();
 include 'connection.php';
 
-// Pastikan parameter id_lukisan tersedia dan merupakan angka
-$id = isset($_GET['id_lukisan']) ? intval($_GET['id_lukisan']) : null;
+// Validate and sanitize the ID parameter
+$id = isset($_GET['id_lukisan']) ? intval($_GET['id_lukisan']) : 0;
 
-if ($id === null || $id <= 0) {
-    echo "ID lukisan tidak valid.";
-    exit;
+if ($id <= 0) {
+    die("ID lukisan tidak valid.");
 }
 
-// Query untuk mengambil data detail lukisan berdasarkan ID
+// Prepare and execute the SQL query to fetch artwork details
 $sql = "SELECT * FROM lukisan WHERE id_lukisan = ?";
 $stmt = $conn->prepare($sql);
 
@@ -19,21 +18,23 @@ if ($stmt) {
     $stmt->execute();
     $result = $stmt->get_result();
 
-    // Periksa apakah ada hasil
+    // Check if artwork exists
     if ($result->num_rows > 0) {
         $lukisan = $result->fetch_assoc();
+        // Now you can access artwork details, for example:
+        $judul_lukisan = $lukisan['title_lukisan'];
+        $deskripsi_lukisan = $lukisan['deskripsi'];
+        $gambar_lukisan = $lukisan['gambar'];
+        // Display or process artwork details as needed
     } else {
-        echo "Lukisan tidak ditemukan.";
-        exit;
+        die("Lukisan tidak ditemukan.");
     }
 
     $stmt->close();
 } else {
-    echo "Query gagal disiapkan: " . $conn->error;
-    exit;
+    die("Query gagal disiapkan: " . $conn->error);
 }
 
-$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -183,10 +184,10 @@ $conn->close();
 
 <div class="container">
     <span class="close-button" id="close-button">&times;</span>
-    <h1><?php echo $lukisan['title_lukisan']; ?></h1>
-    <h2>Karya <?php echo $lukisan['nama_akun']; ?></h2>
+    <h1><?php echo htmlspecialchars($lukisan['title_lukisan']); ?></h1>
+    <h2>Karya <?php echo htmlspecialchars($lukisan['username']); ?></h2>
     <div class="image-placeholder">
-        <img src="<?php echo $lukisan['gambar']; ?>" alt="Artwork Image">
+        <img src="<?php echo htmlspecialchars($lukisan['gambar']); ?>" alt="Artwork Image">
     </div>
     <div class="icons">
         <span class="icon" id="post-like-icon">&#9825;<span class="like-count" id="post-like-count">0</span></span>
@@ -195,12 +196,12 @@ $conn->close();
         <span class="icon">&#128257;</span>
     </div>
     <div class="details">
-        <p><strong>Tahun:</strong> <?php echo $lukisan['tahun_pembuatan']; ?></p>
-        <p><strong>Ukuran:</strong> <?php echo $lukisan['ukuran']; ?></p>
-        <p><strong>Media:</strong> <?php echo $lukisan['media']; ?></p>
+        <p><strong>Production year:</strong> <?php echo htmlspecialchars($lukisan['tahun_pembuatan']); ?></p>
+        <p><strong>Size:</strong> <?php echo htmlspecialchars($lukisan['ukuran']); ?></p>
+        <p><strong>Media:</strong> <?php echo htmlspecialchars($lukisan['media']); ?></p>
     </div>
     <div class="description">
-        <?php echo nl2br($lukisan['deskripsi']); ?>
+    <p><strong>Description:</strong> <?php echo nl2br(htmlspecialchars($lukisan['deskripsi'])); ?></p>
     </div>
     <div class="comment-section" id="comment-section">
         <h3>Komentar</h3>
@@ -219,45 +220,152 @@ $conn->close();
         window.history.back();
     });
 
-    // Dummy data untuk komentar
-    const comments = [
-        {
-            user: "User1",
-            timestamp: "2023-03-15 10:30",
-            text: "Keren banget!",
-            likes: 5
-        },
-        {
-            user: "User2",
-            timestamp: "2023-03-15 11:00",
-            text: "Bagus sekali.",
-            likes: 2
-        }
-    ];
-
-    function displayComments() {
-        const commentList = document.getElementById('comment-list');
-        commentList.innerHTML = '';
-        comments.forEach(comment => {
-            const commentElement = document.createElement('div');
-            commentElement.classList.add('comment');
-            commentElement.innerHTML = `
-                <div class="user">${comment.user}</div>
-                <div class="timestamp">${comment.timestamp}</div>
-                <div class="text">${comment.text}</div>
-                <div class="actions">
-                    <button type="button">Balas</button>
-                    <button type="button">Edit</button>
-                    <button type="button">Hapus</button>
-                </div>
-                <div class="likes">
-                    <span>&#9825;</span><span>${comment.likes}</span>
-                `;
-            commentList.appendChild(commentElement);
-        });
+    function toggleCommentSection() {
+        const commentSection = document.getElementById('comment-section');
+        commentSection.style.display = commentSection.style.display === 'block' ? 'none' : 'block';
     }
 
-    displayComments();
+    function likePost() {
+        const postLikeCountSpan = document.getElementById('post-like-count');
+        postLikeCountSpan.textContent = parseInt(postLikeCountSpan.textContent) + 1;
+    }
+
+    function handleCommentFormSubmit(event) {
+        event.preventDefault();
+        const commentInput = document.getElementById('comment-input');
+        const commentText = commentInput.value.trim();
+        
+        if (commentText) {
+            addComment(commentText, 'User', new Date().toLocaleString(), [], null);
+            commentInput.value = '';
+            updateCommentCount();
+            saveCommentsToLocalStorage();
+        }
+    }
+
+    function addComment(commentText, user, timestamp, replies, parentElement) {
+        const commentList = parentElement ? parentElement.querySelector('.comment-list') : document.getElementById('comment-list');
+        const newComment = document.createElement('div');
+        newComment.classList.add('comment');
+        newComment.innerHTML = `
+            <div class="user">${user}</div>
+            <div class="timestamp">${timestamp}</div>
+            <div class="text">${commentText}</div>
+            <div class="actions">
+                <button class="reply-button">Balas</button>
+                <button class="edit-button">Edit</button>
+                <button class="delete-button">Hapus</button>
+            </div>
+            <div class="comment-list"></div>
+            <form class="reply-form">
+                <textarea rows="2" placeholder="Tambahkan balasan Anda di sini..."></textarea>
+                <button type="submit">Balas</button>
+            </form>
+        `;
+        commentList.appendChild(newComment);
+
+        const replyButton = newComment.querySelector('.reply-button');
+        const editButton = newComment.querySelector('.edit-button');
+        const deleteButton = newComment.querySelector('.delete-button');
+        const replyForm = newComment.querySelector('.reply-form');
+
+        replyButton.addEventListener('click', () => toggleReplyForm(replyForm));
+        replyForm.addEventListener('submit', (event) => handleReplyFormSubmit(event, newComment));
+        editButton.addEventListener('click', () => editComment(newComment));
+        deleteButton.addEventListener('click', () => deleteComment(newComment));
+    }
+
+    function toggleReplyForm(replyForm) {
+        replyForm.style.display = replyForm.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function handleReplyFormSubmit(event, parentComment) {
+        event.preventDefault();
+        const replyInput = event.target.querySelector('textarea');
+        const replyText = replyInput.value.trim();
+        
+        if (replyText) {
+            addComment(replyText, 'User', new Date().toLocaleString(), [], parentComment);
+            replyInput.value = '';
+            saveCommentsToLocalStorage();
+        }
+    }
+
+    function editComment(commentElement) {
+        const textElement = commentElement.querySelector('.text');
+        const originalText = textElement.textContent;
+        
+        textElement.innerHTML = `
+            <textarea rows="3">${originalText}</textarea>
+            <button class="save-edit-button">Simpan</button>
+            <button class="cancel-edit-button">Batal</button>
+        `;
+
+        const saveEditButton = textElement.querySelector('.save-edit-button');
+        const cancelEditButton = textElement.querySelector('.cancel-edit-button');
+        const editTextarea = textElement.querySelector('textarea');
+
+        saveEditButton.addEventListener('click', () => saveEditComment(commentElement, editTextarea.value));
+        cancelEditButton.addEventListener('click', () => cancelEditComment(commentElement, originalText));
+    }
+
+    function saveEditComment(commentElement, newText) {
+        const textElement = commentElement.querySelector('.text');
+        textElement.textContent = newText;
+        saveCommentsToLocalStorage();
+    }
+
+    function cancelEditComment(commentElement, originalText) {
+        const textElement = commentElement.querySelector('.text');
+        textElement.textContent = originalText;
+    }
+
+    function deleteComment(commentElement) {
+        commentElement.remove();
+        updateCommentCount();
+        saveCommentsToLocalStorage();
+    }
+
+    function updateCommentCount() {
+        const commentCountSpan = document.getElementById('comment-count');
+        const commentList = document.getElementById('comment-list');
+        const commentCount = commentList.getElementsByClassName('comment').length;
+        commentCountSpan.textContent = commentCount;
+    }
+
+    function saveCommentsToLocalStorage() {
+        const commentList = document.getElementById('comment-list');
+        const commentsData = serializeComments(commentList);
+        localStorage.setItem('comments', JSON.stringify(commentsData));
+    }
+
+    function loadCommentsFromLocalStorage() {
+        const commentsData = JSON.parse(localStorage.getItem('comments')) || [];
+        const commentList = document.getElementById('comment-list');
+        commentList.innerHTML = '';
+        deserializeComments(commentsData, commentList);
+    }
+
+    function serializeComments(commentList) {
+        const comments = [];
+        const commentElements = commentList.querySelectorAll('.comment');
+
+        commentElements.forEach(commentElement => {
+            const user = commentElement.querySelector('.user').textContent;
+            const timestamp = commentElement.querySelector('.timestamp').textContent;
+            const text = commentElement.querySelector('.text').textContent;
+            const replies = serializeComments(commentElement.querySelector('.comment-list'));
+            comments.push({ user, timestamp, text, replies });
+        });
+
+        return comments;
+    }
+
+    function deserializeComments(commentsData, commentList) {
+        commentsData.forEach(commentData => {
+            addComment(commentData.text, commentData.user, commentData.timestamp, commentData.replies, commentList);
+        });
+    }
 </script>
 </body>
 </html>
