@@ -126,31 +126,26 @@ if ($result->num_rows > 0) {
                     <h2>Popular Artists</h2>
                     <div class="row">
                         <!-- Bagian dalam loop foreach untuk "Popular Artists" -->
-                        <?php foreach ($images as $image): ?>
+                        <?php foreach ($users as $user_data): ?>
                             <div class="col-md-2">
                                 <div class="text-center">
                                     <?php
-                                    // Ambil data pengguna berdasarkan username dari gambar
-                                    $username = $image['username'];
-                                    if (isset($users[$username])) {
-                                        $user = $users[$username];
-                                        $nama_pengguna = $user['username']; 
-                                        $profile_image = $user['profile_image'];
-                                    } else {
-                                        $nama_pengguna = 'Nama Pengguna';
-                                        $profile_image = 'default.jpg'; 
-                                    }
+                                    // Ambil data pengguna berdasarkan username dari array $user_data
+                                    $username = $user_data['username'];
+                                    $profile_image = $user_data['profile_image'];
                                     ?>
-
                                     <!-- Menampilkan gambar profil pengguna -->
                                     <div class="rounded-circle bg-light p-3">
-                                        <?php if (!empty($profile_image)) : ?>
-                                            <img src="<?php echo $profile_image; ?>" alt="Profile Image">
-                                        <?php else : ?>
-                                            <i class="fas fa-user fa-lg text-secondary"></i>
-                                        <?php endif; ?>
+                                        <a href="Account_User_Lain.php?username=<?php echo urlencode($user_data['username']); ?>">
+                                            <?php if (!empty($profile_image)) : ?>
+                                                <img src="<?php echo $profile_image; ?>" alt="Profile Image">
+                                            <?php else : ?>
+                                                <i class="fas fa-user fa-lg text-secondary"></i>
+                                            <?php endif; ?>
+                                        </a>
                                     </div>
-                                    <p class="mt-2"><?php echo $nama_pengguna; ?></p>
+
+                                    <p class="mt-2"><?php echo $username; ?></p>
                                 </div>
                             </div>
                         <?php endforeach; ?>

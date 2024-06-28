@@ -1,16 +1,20 @@
 <?php
+session_start();
 include 'connection.php';
 
-if (!isset($_GET['id'])) {
+if (!isset($_GET['username'])) {
     header('Location: Home.php');
     exit();
 }
 
-$user_id = $_GET['username'];
+$username = $_GET['username'];
 
-// Query untuk mengambil informasi pengguna berdasarkan ID
-$sql = "SELECT * FROM data_user WHERE username = $user_id";
-$result = $conn->query($sql);
+// Prepared statement untuk mengambil informasi pengguna berdasarkan username
+$sql = "SELECT * FROM data_user WHERE username = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param('s', $username);
+$stmt->execute();
+$result = $stmt->get_result();
 
 if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
@@ -23,25 +27,73 @@ if ($result->num_rows > 0) {
     $youtube = $row['youtube'];
 
     // Query for stats
-    $sql_stats = "SELECT COUNT(*) AS total_likes FROM likes WHERE user_id = $user_id";
-    $result_stats = $conn->query($sql_stats);
-    $total_likes = ($result_stats && $result_stats->num_rows > 0) ? $result_stats->fetch_assoc()['total_likes'] : 0;
+    $user_id = $row['id']; // Ambil ID pengguna untuk digunakan dalam query stats
 
-    $sql_followers = "SELECT COUNT(*) AS total_followers FROM follow WHERE following_id = $user_id";
-    $result_followers = $conn->query($sql_followers);
-    $total_followers = ($result_followers && $result_followers->num_rows > 0) ? $result_followers->fetch_assoc()['total_followers'] : 0;
+    // $sql_stats = "SELECT COUNT(*) AS total_likes FROM likes WHERE user_id = ?";
+    // $stmt_stats = $conn->prepare($sql_stats);
+    // $stmt_stats->bind_param('i', $user_id);
+    // $stmt_stats->execute();
+    // $result_stats = $stmt_stats->get_result();
+    // $total_likes = ($result_stats->num_rows > 0) ? $result_stats->fetch_assoc()['total_likes'] : 0;
 
-    $sql_following = "SELECT COUNT(*) AS total_following FROM follow WHERE follower_id = $user_id";
-    $result_following = $conn->query($sql_following);
-    $total_following = ($result_following && $result_following->num_rows > 0) ? $result_following->fetch_assoc()['total_following'] : 0;
+    // $sql_followers = "SELECT COUNT(*) AS total_followers FROM follow WHERE following_id = ?";
+    // $stmt_followers = $conn->prepare($sql_followers);
+    // $stmt_followers->bind_param('i', $user_id);
+    // $stmt_followers->execute();
+    // $result_followers = $stmt_followers->get_result();
+    // $total_followers = ($result_followers->num_rows > 0) ? $result_followers->fetch_assoc()['total_followers'] : 0;
+
+    // $sql_following = "SELECT COUNT(*) AS total_following FROM follow WHERE follower_id = ?";
+    // $stmt_following = $conn->prepare($sql_following);
+    // $stmt_following->bind_param('i', $user_id);
+    // $stmt_following->execute();
+    // $result_following = $stmt_following->get_result();
+    // $total_following = ($result_following->num_rows > 0) ? $result_following->fetch_assoc()['total_following'] : 0;
 
 } else {
     echo "Pengguna tidak ditemukan.";
+    $nama = 'Nama';
+    $description = 'Deskripsi singkat . . . . . . ()';
+    $instagram = '#';
+    $twitter = '#';
+    $youtube = '#';
+    $profile_image = 'default.jpg'; 
     exit();
 }
 
+$sql_images = "SELECT * FROM lukisan WHERE status = 'success' AND username = ?";
+$stmt_images = $conn->prepare($sql_images);
+if ($stmt_images === false) {
+    die("Error preparing statement: " . $conn->error);
+}
+
+$stmt_images->bind_param("s", $username);
+$stmt_images->execute();
+$result_images = $stmt_images->get_result();
+
+// Inisialisasi array untuk menyimpan hasil query gambar
+$images = [];
+
+if ($result_images->num_rows > 0) {
+    while ($row_image = $result_images->fetch_assoc()) {
+        $images[] = $row_image; // Menyimpan semua data baris dari hasil query
+    }
+}
+
+// Cek apakah pengguna ini diikuti atau belum
+$sql_check_follow = "SELECT * FROM follow WHERE follower_id = ? AND following_id = ?";
+$stmt_check_follow = $conn->prepare($sql_check_follow);
+$stmt_check_follow->bind_param('ii', $_SESSION['username'], $user_id);
+$stmt_check_follow->execute();
+$result_check_follow = $stmt_check_follow->get_result();
+$is_following = $result_check_follow->num_rows > 0;
+
+
+$stmt_images->close();
+$stmt_check_follow->close();
 $conn->close();
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -135,9 +187,12 @@ $conn->close();
                 </div>
                 <h2><?php echo $username; ?></h2>
                 <div class="profile-stats">
-                    <div><?php echo $total_likes; ?><br>Suka</div>
+                    <!-- <div><?php echo $total_likes; ?><br>Suka</div>
                     <div><?php echo $total_followers; ?><br>Pengikut</div>
-                    <div><?php echo $total_following; ?><br>Mengikuti</div>
+                    <div><?php echo $total_following; ?><br>Mengikuti</div> -->
+                    <div>0<br>Suka</div>
+                    <div>0<br>Pengikut</div>
+                    <div>0<br>Mengikuti</div>
                 </div>
             </div>
 
@@ -153,9 +208,15 @@ $conn->close();
 
             <!-- Tombol Follow -->
             <div class="profile-actions">
-                <form action="user_follow.php" method="post"> <!-- Ganti follow.php dengan nama file yang sesuai -->
+                <form action="user_follow.php" method="post">
                     <input type="hidden" name="following_id" value="<?php echo $user_id; ?>">
-                    <button type="submit">Follow</button>
+                    <?php
+                        if ($is_following) {
+                            echo '<button type="submit" name="unfollow">Unfollow</button>';
+                        } else {
+                            echo '<button type="submit" name="follow">Follow</button>';
+                        }
+                    ?>
                 </form>
             </div>
 

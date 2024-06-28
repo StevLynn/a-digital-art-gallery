@@ -188,7 +188,7 @@ $conn->close();
 <div class="container">
     <span class="close-button" id="close-button">&times;</span>
     <h1><?php echo htmlspecialchars($lukisan['title_lukisan']); ?></h1>
-    <h2>Karya <span><?php echo htmlspecialchars($lukisan['username']); ?></span></h2>
+    <h2>Karya <a href="Account_User_Lain.php?username=<?php echo urlencode($lukisan['username']); ?>"><span><?php echo htmlspecialchars($lukisan['username']); ?></span></a></h2>
     <div class="image-placeholder">
         <img src="<?php echo htmlspecialchars($lukisan['gambar']); ?>" alt="Artwork Image">
     </div>
