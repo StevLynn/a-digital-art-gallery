@@ -48,13 +48,11 @@ if ($result->num_rows > 0) {
 </head>
 
 <body>
-    <div class="navbar-top">
-
-    </div>
+<div class="navbar-top"></div>
     <div class="aside_navbar">
         <aside id="sidebar">
             <div class="sidebar_logo">
-                <img src="img/Logo.png">
+                <img src="img/Logo.png" alt="Logo">
             </div>
             <div class="sidebar-menu">
                 <ul class="sidebar-item">
@@ -92,7 +90,7 @@ if ($result->num_rows > 0) {
                 <?php if (!isset($_SESSION['username'])): ?>
                 <ul class="sidebar-item">
                     <a href="Halaman_login.html">
-                    <i class="fa-solid fa-right-to-bracket"></i>
+                        <i class="fa-solid fa-right-to-bracket"></i>
                         <span>Login</span>
                     </a>
                 </ul>
@@ -115,7 +113,7 @@ if ($result->num_rows > 0) {
         </aside>
     </div>
         
-    <div class="main" id="main">
+    <main>
         <div class="card-main">
             <div class="menu_home">
                 <a href="#" id="forYouLink">For you</a>
@@ -257,23 +255,23 @@ if ($result->num_rows > 0) {
                 </div>
             </div>
         </div>
-    </div>
     
-    <footer>
-        <div class="footer-content">
-            <h3>A Digital Art Gallery</h3>
-            <p>Visit us</p>
-            <ul class="socials">
-                <li><a href="https://www.instagram.com/adheputryb_01"><i class="fab fa-instagram"></i></a></li>
-                <li><a href="https://www.facebook.com/Alif Saputra"><i class="fab fa-facebook"></i></a></li>
-                <li><a href="https://www.twitter.com/ibnudzaky"><i class="fab fa-twitter"></i></a></li>
-                <li><a href="mailto:stevelinfriska29@gmail.com"><i class="far fa-envelope"></i></a></li>
-            </ul>
-        </div>
-        <div class="footer-bottom">
-            <p>copyright &copy;2024 A Digital Art Gallery. design by<span>kelompok 2dua</span></p>
-        </div>
-    </footer>
+        <footer>
+            <div class="footer-content">
+                <h3>A Digital Art Gallery</h3>
+                <p>Visit us</p>
+                <ul class="socials">
+                    <li><a href="https://www.instagram.com/adheputryb_01"><i class="fab fa-instagram"></i></a></li>
+                    <li><a href="https://www.facebook.com/Alif Saputra"><i class="fab fa-facebook"></i></a></li>
+                    <li><a href="https://www.twitter.com/ibnudzaky"><i class="fab fa-twitter"></i></a></li>
+                    <li><a href="mailto:stevelinfriska29@gmail.com"><i class="far fa-envelope"></i></a></li>
+                </ul>
+            </div>
+            <div class="footer-bottom">
+                <p>copyright &copy;2024 A Digital Art Gallery. design by<span>kelompok 2dua</span></p>
+            </div>
+        </footer>
+    </main>
     
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
