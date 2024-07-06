@@ -8,10 +8,10 @@ $id_lukisan = isset($data['id_lukisan']) ? intval($data['id_lukisan']) : 0;
 $comment_text = isset($data['comment_text']) ? trim($data['comment_text']) : '';
 
 if ($id_lukisan > 0 && !empty($comment_text)) {
-    $username = $_SESSION['username']; // Assuming the username is stored in session
+    $username = $_SESSION['username']; 
     $timestamp = date('Y-m-d H:i:s');
 
-    // Prepare and execute the SQL query to insert comment
+    
     $sql = "INSERT INTO comments (id_lukisan, username, comment_text, timestamp) VALUES (?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
 
