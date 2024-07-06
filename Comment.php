@@ -2,33 +2,36 @@
 session_start();
 include 'connection.php';
 
-// Validate and sanitize the ID parameter
-$id = isset($_POST['id_lukisan']) ? intval($_POST['id_lukisan']) : 0;
-$comment_text = isset($_POST['comment_text']) ? trim($_POST['comment_text']) : '';
+// Get the posted data
+$data = json_decode(file_get_contents('php://input'), true);
+$id_lukisan = isset($data['id_lukisan']) ? intval($data['id_lukisan']) : 0;
+$comment_text = isset($data['comment_text']) ? trim($data['comment_text']) : '';
 
-if ($id <= 0) {
-    die(json_encode(['success' => false, 'error' => 'Invalid artwork ID.']));
-}
+if ($id_lukisan > 0 && !empty($comment_text)) {
+    $username = $_SESSION['username']; // Assuming the username is stored in session
+    $timestamp = date('Y-m-d H:i:s');
 
-if (empty($comment_text)) {
-    die(json_encode(['success' => false, 'error' => 'Comment cannot be empty.']));
-}
+    // Prepare and execute the SQL query to insert comment
+    $sql = "INSERT INTO comments (id_lukisan, username, comment_text, timestamp) VALUES (?, ?, ?, ?)";
+    $stmt = $conn->prepare($sql);
 
-// Assuming 'id_user' is your user identifier, adjust as per your session/user management
-$id_user = isset($_SESSION['id_user']) ? $_SESSION['id_user'] : 0;
-
-// Prepare and execute the SQL statement to insert the comment
-$stmt = $conn->prepare("INSERT INTO comments (id_lukisan, id_user, comment_text) VALUES (?, ?, ?)");
-$stmt->bind_param('iis', $id, $id_user, $comment_text);
-
-if ($stmt->execute()) {
-    // On successful insertion, return success response
-    echo json_encode(['success' => true]);
+    if ($stmt) {
+        $stmt->bind_param("isss", $id_lukisan, $username, $comment_text, $timestamp);
+        $stmt->execute();
+        
+        if ($stmt->affected_rows > 0) {
+            echo json_encode(['success' => true]);
+        } else {
+            echo json_encode(['success' => false, 'error' => 'Failed to save comment.']);
+        }
+        
+        $stmt->close();
+    } else {
+        echo json_encode(['success' => false, 'error' => 'Failed to prepare query.']);
+    }
 } else {
-    // On failure, return error response
-    echo json_encode(['success' => false, 'error' => 'Failed to save comment.']);
+    echo json_encode(['success' => false, 'error' => 'Invalid input.']);
 }
 
-$stmt->close();
 $conn->close();
 ?>
