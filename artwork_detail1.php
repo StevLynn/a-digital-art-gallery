@@ -59,9 +59,6 @@ $conn->close();
             padding: 20px;
             border-radius: 10px;
             position: relative;
-            h2 span{
-                color: #AE0000;
-            }
         }
         .close-button {
             position: absolute;
@@ -217,10 +214,6 @@ $conn->close();
 </div>
 
 <script>
-document.getElementById('close-button').addEventListener('click', function() {
-    window.history.back();
-});
-
 document.addEventListener('DOMContentLoaded', () => {
     const commentIcon = document.getElementById('comment-icon');
     const postLikeIcon = document.getElementById('post-like-icon');
@@ -242,13 +235,35 @@ function toggleCommentSection() {
 
 function likePost() {
     const postLikeCountSpan = document.getElementById('post-like-count');
-    postLikeCountSpan.textContent = parseInt(postLikeCountSpan.textContent) + 1;
+    const currentLikeCount = parseInt(postLikeCountSpan.textContent);
+    const idLukisan = <?php echo json_encode($id); ?>;
+
+    fetch('like_post.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `id_lukisan=${idLukisan}`,
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            postLikeCountSpan.textContent = currentLikeCount + 1;
+        } else {
+            throw new Error(data.error || 'Failed to like the post.');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert(error.message);
+    });
 }
 
 function handleCommentFormSubmit(event) {
     event.preventDefault();
     const commentInput = document.getElementById('comment-input');
     const commentText = commentInput.value.trim();
+    const idLukisan = <?php echo json_encode($id); ?>;
 
     if (commentText) {
         fetch('Comment.php', {
@@ -257,7 +272,7 @@ function handleCommentFormSubmit(event) {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                id_lukisan: <?php echo $id; ?>,
+                id_lukisan: idLukisan,
                 comment_text: commentText,
             }),
         })
@@ -403,6 +418,5 @@ function deserializeComments(commentsData, commentList) {
     });
 }
 </script>
-
 </body>
 </html>
