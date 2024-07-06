@@ -2,7 +2,7 @@
 session_start();
 include 'connection.php';
 
-// Get the posted data
+
 $data = json_decode(file_get_contents('php://input'), true);
 $id_lukisan = isset($data['id_lukisan']) ? intval($data['id_lukisan']) : 0;
 $comment_text = isset($data['comment_text']) ? trim($data['comment_text']) : '';
