@@ -2,14 +2,13 @@
 session_start();
 include 'connection.php';
 
-// Validate and sanitize the ID parameter
+
 $id = isset($_GET['id_lukisan']) ? intval($_GET['id_lukisan']) : 0;
 
 if ($id <= 0) {
     die("Invalid artwork ID.");
 }
 
-// Prepare and execute the SQL query to fetch artwork details
 $sql = "SELECT * FROM lukisan WHERE id_lukisan = ?";
 $stmt = $conn->prepare($sql);
 
@@ -18,14 +17,11 @@ if ($stmt) {
     $stmt->execute();
     $result = $stmt->get_result();
 
-    // Check if artwork exists
     if ($result->num_rows > 0) {
         $lukisan = $result->fetch_assoc();
-        // Now you can access artwork details, for example:
         $judul_lukisan = $lukisan['title_lukisan'];
         $deskripsi_lukisan = $lukisan['deskripsi'];
         $gambar_lukisan = $lukisan['gambar'];
-        // Display or process artwork details as needed
     } else {
         die("Artwork not found.");
     }
